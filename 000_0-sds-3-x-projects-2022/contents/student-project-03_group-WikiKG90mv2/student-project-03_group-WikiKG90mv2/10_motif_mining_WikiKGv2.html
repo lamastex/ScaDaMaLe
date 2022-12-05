@@ -13439,6 +13439,11 @@ xx: org.apache.spark.sql.DataFrame = [a: struct&lt;id: string&gt;, r1: struct&lt
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">var res = sqlContext.sql(
   &quot;&quot;&quot;
+    WITH t1 as (
+      
+    ), t2 as (
+      
+    )
     SELECT t1.r1.rel AS rel1, t1.r2.rel AS rel2, COUNT(*) AS total2cycles, COUNT_IF(t1.r3 IS NOT NULL) AS total3cycles, COUNT_IF(t1.r3 IS NOT NULL)/COUNT(*) freq FROM threeCycles t1 
     LEFT JOIN twoCycles1 t2 WHERE t1.r1 = t2.r1 AND t1.r2 = t2.r2
     GROUP BY rel1, rel2

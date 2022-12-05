@@ -301,7 +301,9 @@ class VQADatset(Dataset):
 </div>
 <div class="cell markdown">
 <h2 id="training"><a class="header" href="#training">Training</a></h2>
-<p>We train the model with a batch size of 256 and learning rate of 1e-5 (Aadam) for 40 epochs.</p>
+<p>We train the model with a batch size of 256 and learning rate of 1e-5 (Aadam) for 24 epochs.</p>
+<p>It roughly takes 1 hour to train the model for one epoch.</p>
+<h2 id="parallelization"><a class="header" href="#parallelization">Parallelization</a></h2>
 <p>We use Horovod to distribute the training on multiple GPUs. Using Horovod we can train on single-GPU, multiple-GPUs, or even multiple hosts without any further code changes.</p>
 <p>Using Horovod requires only minimal code changes. Including:</p>
 <ol>
