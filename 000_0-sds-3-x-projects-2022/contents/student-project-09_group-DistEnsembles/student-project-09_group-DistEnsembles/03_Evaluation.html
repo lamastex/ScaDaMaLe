@@ -1,0 +1,826 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>03_Evaluation - sds-3.x/ScaDaMaLe</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../../scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/00_Introduction.html"><strong aria-hidden="true">1.</strong> student-project-01_group-GraphOfWiki_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/01_DataLoading_redirectsTable.html"><strong aria-hidden="true">1.1.</strong> 01_DataLoading_redirectsTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/02_DataLoading_pagesTable.html"><strong aria-hidden="true">1.2.</strong> 02_DataLoading_pagesTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/03_DataLoading_pagelinksTable.html"><strong aria-hidden="true">1.3.</strong> 03_DataLoading_pagelinksTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/04_DataLoading_categorylinksTable.html"><strong aria-hidden="true">1.4.</strong> 04_DataLoading_categorylinksTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/05_DataLoading_categoryTable.html"><strong aria-hidden="true">1.5.</strong> 05_DataLoading_categoryTable</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/06_redirectRemoval.html"><strong aria-hidden="true">1.6.</strong> 06_redirectRemoval</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/07_createArticleGraph.html"><strong aria-hidden="true">1.7.</strong> 07_createArticleGraph</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/08_explorationArticleGraph.html"><strong aria-hidden="true">1.8.</strong> 08_explorationArticleGraph</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/09_fullGraphAnalysis.html"><strong aria-hidden="true">1.9.</strong> 09_fullGraphAnalysis</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/10_explorativeMotifs.html"><strong aria-hidden="true">1.10.</strong> 10_explorativeMotifs</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/11_conclusionDiscussionAndFutureWork.html"><strong aria-hidden="true">1.11.</strong> 11_conclusionDiscussionAndFutureWork</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/12_gameNotebookSetup.html"><strong aria-hidden="true">1.12.</strong> 12_gameNotebookSetup</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-01_group-GraphOfWiki/student-project-01_group-GraphOfWiki/13_gameNotebook.html"><strong aria-hidden="true">1.13.</strong> 13_gameNotebook</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-02_group-DDLOfVision/student-project-02_group-DDLOfVision/00_vqa_introduction.html"><strong aria-hidden="true">2.</strong> student-project-02_group-DDLOfVision_00_vqa_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-02_group-DDLOfVision/student-project-02_group-DDLOfVision/01_vqa_model_training.html"><strong aria-hidden="true">2.1.</strong> 01_vqa_model_training</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG90mv2/student-project-03_group-WikiKG90mv2/00_ingest_data.html"><strong aria-hidden="true">3.</strong> student-project-03_group-WikiKG90mv2_00_ingest_data</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG90mv2/student-project-03_group-WikiKG90mv2/01_fetch_descriptions.html"><strong aria-hidden="true">3.1.</strong> 01_fetch_descriptions</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG90mv2/student-project-03_group-WikiKG90mv2/02_load_data.html"><strong aria-hidden="true">3.2.</strong> 02_load_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG90mv2/student-project-03_group-WikiKG90mv2/03_data_exploration.html"><strong aria-hidden="true">3.3.</strong> 03_data_exploration</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG90mv2/student-project-03_group-WikiKG90mv2/04_analysing_relation_types.html"><strong aria-hidden="true">3.4.</strong> 04_analysing_relation_types</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG90mv2/student-project-03_group-WikiKG90mv2/05_motif_search.html"><strong aria-hidden="true">3.5.</strong> 05_motif_search</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG90mv2/student-project-03_group-WikiKG90mv2/06_produce_pagerank_vectors.html"><strong aria-hidden="true">3.6.</strong> 06_produce_pagerank_vectors</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG90mv2/student-project-03_group-WikiKG90mv2/07_pagerank_for_classification.html"><strong aria-hidden="true">3.7.</strong> 07_pagerank_for_classification</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-03_group-WikiKG90mv2/student-project-03_group-WikiKG90mv2/08_outro_discussion.html"><strong aria-hidden="true">3.8.</strong> 08_outro_discussion</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/00_Notebook_Presentation.html"><strong aria-hidden="true">4.</strong> student-project-04_group-FedMLMedicalApp_00_Notebook_Presentation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/01_BrainTumorSegmentation_Centralized_Training.html"><strong aria-hidden="true">4.1.</strong> 01_BrainTumorSegmentation_Centralized_Training</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/02_Federated_Learning_BrainTumorSegmentation.html"><strong aria-hidden="true">4.2.</strong> 02_Federated_Learning_BrainTumorSegmentation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/data_upload_test.html"><strong aria-hidden="true">4.3.</strong> data_upload_test</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/00_introduction.html"><strong aria-hidden="true">5.</strong> student-project-05_group-DistOpt_00_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/01_Bayesian_optimization.html"><strong aria-hidden="true">5.1.</strong> 01_Bayesian_optimization</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/02_Gaussian_processes.html"><strong aria-hidden="true">5.2.</strong> 02_Gaussian_processes</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/03_acquisition_functions.html"><strong aria-hidden="true">5.3.</strong> 03_acquisition_functions</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/04_scalable_Bayesian_optimization.html"><strong aria-hidden="true">5.4.</strong> 04_scalable_Bayesian_optimization</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/05_implementation_documentation.html"><strong aria-hidden="true">5.5.</strong> 05_implementation_documentation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/06_our_implementation.html"><strong aria-hidden="true">5.6.</strong> 06_our_implementation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-05_group-DistOpt/student-project-05_group-DistOpt/07_additional_code.html"><strong aria-hidden="true">5.7.</strong> 07_additional_code</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/00_introduction.html"><strong aria-hidden="true">6.</strong> student-project-07_group-ExpsZerOInit_00_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/01_transformer.html"><strong aria-hidden="true">6.1.</strong> 01_transformer</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-07_group-ExpsZerOInit/student-project-07_group-ExpsZerOInit/03_ddpm.html"><strong aria-hidden="true">6.2.</strong> 03_ddpm</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/00_Introduction.html"><strong aria-hidden="true">7.</strong> student-project-08_group-WikiSearch_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/01_InputParsing.html"><strong aria-hidden="true">7.1.</strong> 01_InputParsing</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/02_PageRank.html"><strong aria-hidden="true">7.2.</strong> 02_PageRank</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-08_group-WikiSearch/student-project-08_group-WikiSearch/03_QuerySearch.html"><strong aria-hidden="true">7.3.</strong> 03_QuerySearch</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/00_Introduction.html"><strong aria-hidden="true">8.</strong> student-project-09_group-DistEnsembles_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/02_Main.html"><strong aria-hidden="true">8.1.</strong> 02_Main</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/03_Evaluation.html" class="active"><strong aria-hidden="true">8.2.</strong> 03_Evaluation</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/099_extra_Data_Preprocessing.html"><strong aria-hidden="true">8.3.</strong> 099_extra_Data_Preprocessing</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/099_extra_Ensemble.html"><strong aria-hidden="true">8.4.</strong> 099_extra_Ensemble</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/099_extra_Single_Model.html"><strong aria-hidden="true">8.5.</strong> 099_extra_Single_Model</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/099_extra_data_transformations.html"><strong aria-hidden="true">8.6.</strong> 099_extra_data_transformations</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/099_extra_non_distributed.html"><strong aria-hidden="true">8.7.</strong> 099_extra_non_distributed</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/00_introduction.html"><strong aria-hidden="true">9.</strong> student-project-10_group-RDI_00_introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/01_prepare_data.html"><strong aria-hidden="true">9.1.</strong> 01_prepare_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/02_baseline.html"><strong aria-hidden="true">9.2.</strong> 02_baseline</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/03_single_machine.html"><strong aria-hidden="true">9.3.</strong> 03_single_machine</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-10_group-RDI/student-project-10_group-RDI/04_distributed_learning.html"><strong aria-hidden="true">9.4.</strong> 04_distributed_learning</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/01_Introduction.html"><strong aria-hidden="true">10.</strong> student-project-11_group-CollaborativeFiltering_01_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-11_group-CollaborativeFiltering/student-project-11_group-CollaborativeFiltering/02_Implementation.html"><strong aria-hidden="true">10.1.</strong> 02_Implementation</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/01_Federated_Learning_Introduction.html"><strong aria-hidden="true">11.</strong> student-project-12_group-FedLearnOpt_01_Federated_Learning_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/02_Horovod_Introduction.html"><strong aria-hidden="true">11.1.</strong> 02_Horovod_Introduction</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-12_group-FedLearnOpt/student-project-12_group-FedLearnOpt/03_Implementations.html"><strong aria-hidden="true">11.2.</strong> 03_Implementations</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/00_Introduction.html"><strong aria-hidden="true">12.</strong> student-project-14_group-EarthObs_00_Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/01_Download_data.html"><strong aria-hidden="true">12.1.</strong> 01_Download_data</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/02_Image_preprocessing.html"><strong aria-hidden="true">12.2.</strong> 02_Image_preprocessing</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/03_KerasCNN.html"><strong aria-hidden="true">12.3.</strong> 03_KerasCNN</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/04_Prediction.html"><strong aria-hidden="true">12.4.</strong> 04_Prediction</a></li><li class="chapter-item expanded "><a href="../../../contents/student-project-14_group-EarthObs/student-project-14_group-EarthObs/05_Visualisation.html"><strong aria-hidden="true">12.5.</strong> 05_Visualisation</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../../editors.html"><strong aria-hidden="true">13.</strong> Editors</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <div class="cell markdown">
+<h3 id="cloning-necessary-functions-from-the-previous-notebook"><a class="header" href="#cloning-necessary-functions-from-the-previous-notebook">Cloning necessary functions from the previous notebook</a></h3>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import numpy as np
+import torch
+
+import pyspark.sql.functions as F
+from pyspark.sql import Window
+from pyspark.sql.types import StructType, StringType, DoubleType, IntegerType
+from pyspark.sql.functions import collect_list, size, udf
+from pyspark.ml.feature import VectorAssembler
+from pyspark.sql.types import BooleanType
+from pyspark.sql.functions import udf
+from itertools import groupby
+from pyspark.rdd import PipelinedRDD
+
+from pathlib import Path
+import os
+import matplotlib.pyplot as plt
+
+ROOTDIR = '/dbfs/VideoPose3D'
+</code></pre>
+</div>
+<div class="cell markdown">
+<h4 id="data"><a class="header" href="#data">Data</a></h4>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">humaneva_train_path = f'{ROOTDIR}/humaneva/humaneva15_train.csv'
+humaneva_test_path = f'{ROOTDIR}/humaneva/humaneva15_test.csv'
+
+def load_data_from_csv(file_location):
+    &quot;&quot;&quot;Load and preprocess HumanEva data
+    Args:
+        file_location: file location from which to load the data
+        
+    Returns:
+        df: spark DataFrame
+    &quot;&quot;&quot;
+    file_type = &quot;csv&quot;
+    infer_schema = &quot;true&quot;
+    first_row_is_header = False
+    delimiter = &quot;,&quot;
+    
+    schema = StructType() \
+      .add(&quot;Idx&quot;,IntegerType(),True) \
+      .add(&quot;Subject&quot;,StringType(),True) \
+      .add(&quot;Action&quot;,StringType(),True) \
+      .add(&quot;Camera&quot;,StringType(),True)
+    for i in range(15):
+        schema = schema.add(f&quot;u{i}&quot;,DoubleType(),True).add(f&quot;v{i}&quot;,DoubleType(),True)
+    for i in range(15):
+        schema = schema.add(f&quot;X{i}&quot;,DoubleType(),True).add(f&quot;Y{i}&quot;,DoubleType(),True).add(f&quot;Z{i}&quot;,DoubleType(),True)
+    
+    # Load the data from file
+    df = spark.read.csv(file_location, header=True, schema=schema, sep=',')
+    return df
+
+df_train = load_data_from_csv(humaneva_train_path).withColumn(&quot;Group&quot;, F.concat_ws(', ', &quot;Subject&quot;, &quot;Action&quot;, &quot;Camera&quot;)).drop(&quot;Subject&quot;, &quot;Action&quot;, &quot;Camera&quot;)
+df_test = load_data_from_csv(humaneva_test_path).withColumn(&quot;Group&quot;, F.concat_ws(', ', &quot;Subject&quot;, &quot;Action&quot;, &quot;Camera&quot;)).drop(&quot;Subject&quot;, &quot;Action&quot;, &quot;Camera&quot;)
+
+feature_names = []
+target_names = []
+n_keypoints = 15 
+for i in range(n_keypoints):
+    feature_names.append(&quot;u{}&quot;.format(i))
+    feature_names.append(&quot;v{}&quot;.format(i))
+    target_names.append(&quot;X{}&quot;.format(i))
+    target_names.append(&quot;Y{}&quot;.format(i))
+    target_names.append(&quot;Z{}&quot;.format(i))
+
+feature_assembler = VectorAssembler(inputCols=feature_names, outputCol=&quot;features&quot;)
+target_assembler = VectorAssembler(inputCols=target_names, outputCol=&quot;targets&quot;)
+
+
+def assemble_vectors(df):
+    df = feature_assembler.transform(df)
+    df = target_assembler.transform(df)
+    df = df.drop(*feature_names).drop(*target_names)
+    return df
+
+df_train = assemble_vectors(df_train)
+df_test = assemble_vectors(df_test)
+
+receptive_field = 27
+
+w = Window.orderBy(&quot;Idx&quot;).partitionBy([&quot;Group&quot;]).rowsBetween(Window.currentRow-receptive_field//2, Window.currentRow+receptive_field//2)
+
+def create_receptive_fields(df):
+    df = df.withColumn(&quot;feature_sequence&quot;, collect_list(&quot;features&quot;).over(w))
+    df = df.withColumn(&quot;group_sequence&quot;, collect_list(&quot;Group&quot;).over(w))
+    df = df.filter(size(df.group_sequence) == receptive_field)
+    return df
+
+df_train_receptive = create_receptive_fields(df_train).drop(&quot;features&quot;)
+df_test_receptive = create_receptive_fields(df_test).drop(&quot;features&quot;)
+
+from random import sample, seed
+
+## find right random seed to compensate for the different size of each chunk
+seed(0) # seed 0 gives ok split
+chunks = df_train_receptive.select(&quot;Group&quot;).distinct().collect()
+chunks = [x[&quot;Group&quot;] for x in chunks]
+
+num_chunks = len(chunks)
+num_unlabeled = int(num_chunks*0.6)
+
+unlabeled_chunks = sample(chunks, num_unlabeled)
+labeled_chunks = [x for x in chunks if x not in unlabeled_chunks]
+
+df_train_receptive_unlabeled = df_train_receptive.filter(df_train_receptive.Group.isin(unlabeled_chunks))
+df_train_receptive_unlabeled = df_train_receptive_unlabeled.drop(&quot;targets&quot;)
+df_train_receptive_labeled = df_train_receptive.filter(~df_train_receptive.Group.isin(unlabeled_chunks))
+
+
+def toTensorLabeled(x):
+    fs = x[&quot;feature_sequence&quot;]
+    target = x[&quot;targets&quot;]
+    
+    feature_tensor = []
+    for f in fs:
+        feature_tensor.append(f)
+    
+    xx = torch.tensor(feature_tensor,dtype=torch.float)
+    yy = torch.tensor(target,dtype=torch.float)
+    
+    return xx.view(27, 15, 2), yy.view(1, 15, 3)
+
+def toTensorUnlabeled(x):
+    fs = x[&quot;feature_sequence&quot;]
+    feature_tensor = []
+    for f in fs:
+        feature_tensor.append(f)
+    
+    xx = torch.tensor(feature_tensor, dtype=torch.float)
+    
+    return xx.view(27, 15, 2)
+
+labeled_tensor_rdd = df_train_receptive_labeled.rdd.map(toTensorLabeled)
+unlabeled_tensor_rdd = df_train_receptive_unlabeled.rdd.map(toTensorUnlabeled)
+test_tensor_rdd = df_test_receptive.rdd.map(toTensorLabeled)
+labeled_full_size = labeled_tensor_rdd.count()
+unlabeled_full_size = unlabeled_tensor_rdd.count()
+test_full_size = test_tensor_rdd.count()
+
+
+class DataSet(torch.utils.data.Dataset):
+    def __init__(self, pos2D, pos3D):
+        self.pos2D = pos2D # self.pos2D: B x 27 x 15 * 2
+        self.pos3D = pos3D # self.pos3D: B x 1 x 15 * 3
+
+    def __len__(self):
+        return self.pos2D.shape[0]
+
+    def __getitem__(self, ind):
+        pos2D = self.pos2D[ind] # pos2D: B x 27 x 15 * 2 -&gt; 27 x 15 * 2
+        pos3D = self.pos3D[ind] # pos2D: B x 1 x 15 * 3 -&gt; 1 x 15 * 2
+        return pos2D, pos3D
+
+data_labeled = labeled_tensor_rdd.takeSample(False, labeled_full_size)
+pos2D_labeled, pos3D_labeled = zip(*data_labeled)
+pos2D_labeled, pos3D_labeled = torch.stack(pos2D_labeled), torch.stack(pos3D_labeled)
+
+data_test = test_tensor_rdd.takeSample(False, test_full_size)
+pos2D_test, pos3D_test = zip(*data_test)
+pos2D_test, pos3D_test = torch.stack(pos2D_test), torch.stack(pos3D_test)
+</code></pre>
+</div>
+<div class="cell markdown">
+<h4 id="model"><a class="header" href="#model">Model</a></h4>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from torch import nn
+
+class Args:
+    # Data arguments
+    num_joints = 15
+    
+    # Model arguments
+    stride = 1    # chunk size to use during training
+    epochs = 10 # 100    # number of training epochs
+    batch_size = 128     # batch size in terms of predicted frames
+    dropout = 0.25    # dropout probability
+    learning_rate = 0.001    # initial learning rate
+    lr_decay = 0.996     # learning rate decay per epoch
+    data_augmentation = True # disable train-time flipping
+    test_time_augmentation = True # disable test-time flipping
+    architecture = '3,3,3'    # filter widths separated by comma
+    channels = 1024    # number of channels in convolution layers
+
+args = Args()
+filter_widths = [int(x) for x in args.architecture.split(',')]
+receptive_field = np.prod(filter_widths) # model_pos.receptive_field()
+print('INFO: Receptive field: {} frames'.format(receptive_field))
+pad = (receptive_field - 1) // 2 # Padding on each side
+hyperparams = [args.num_joints, 2, args.num_joints, filter_widths, args.dropout, args.channels]
+
+class TemporalModelBase(nn.Module):
+    def __init__(self, num_joints_in, in_features, num_joints_out,
+                 filter_widths, dropout, channels):
+        super().__init__()
+        # Validate input
+        for fw in filter_widths:
+            assert fw % 2 != 0, 'Only odd filter widths are supported'
+        self.num_joints_in = num_joints_in
+        self.in_features = in_features
+        self.num_joints_out = num_joints_out
+        self.filter_widths = filter_widths
+        self.drop = nn.Dropout(dropout)
+        self.relu = nn.ReLU(inplace=True)
+        self.pad = [ filter_widths[0] // 2 ]
+        self.expand_bn = nn.BatchNorm1d(channels, momentum=0.1)
+        self.shrink = nn.Conv1d(channels, num_joints_out*3, 1)
+        
+
+    def set_bn_momentum(self, momentum):
+        self.expand_bn.momentum = momentum
+        for bn in self.layers_bn:
+            bn.momentum = momentum
+        
+    def forward(self, pos2D):
+        assert len(pos2D.shape) == 4 # pos2D: B x 27 x 15 x 2
+        assert pos2D.shape[-2] == self.num_joints_in # 15
+        assert pos2D.shape[-1] == self.in_features   # 2     
+        sz = pos2D.shape[:3] # B x 27 x 15
+        pos2D = pos2D.view(pos2D.shape[0], pos2D.shape[1], -1) # B x 27 x 15 * 2
+        pos2D = pos2D.permute(0, 2, 1) # B x 15 * 2 x 27
+        pos3D = self._forward_blocks(pos2D)
+        pos3D = pos3D.permute(0, 2, 1)
+        pos3D = pos3D.view(sz[0], -1, self.num_joints_out, 3)
+        return pos3D
+
+class TemporalModel(TemporalModelBase):
+    def __init__(self, num_joints_in, in_features, num_joints_out,
+                 filter_widths, dropout=0.25, channels=1024):
+        &quot;&quot;&quot;
+        Reference 3D pose estimation model with temporal convolutions.Initialize this model.
+        
+        Arg:
+            num_joints_in -- number of input joints (i.e. 15 for HumanEva-I)
+            in_features -- number of input features for each joint (typically 2 for 2D input)
+            num_joints_out -- number of output joints (can be different than input)
+            filter_widths -- list of convolution widths, which also determines the # of blocks and receptive field
+            dropout -- dropout probability
+            channels -- number of convolution channels
+        &quot;&quot;&quot;
+        super().__init__(num_joints_in, in_features, num_joints_out, filter_widths, dropout, channels)
+        self.expand_conv = nn.Conv1d(num_joints_in*in_features, channels, filter_widths[0], bias=False)
+        layers_conv = []
+        layers_bn = []
+        next_dilation = filter_widths[0] # 3
+        for i in range(1, len(filter_widths)):
+            self.pad.append((filter_widths[i] - 1)*next_dilation // 2) # [1, 3, 9]
+            layers_conv.append(nn.Conv1d(channels, channels,
+                                         filter_widths[i],
+                                         dilation=next_dilation,
+                                         bias=False))
+            layers_bn.append(nn.BatchNorm1d(channels, momentum=0.1))
+            layers_conv.append(nn.Conv1d(channels, channels, 1, dilation=1, bias=False))
+            layers_bn.append(nn.BatchNorm1d(channels, momentum=0.1))
+            next_dilation *= filter_widths[i] # 3, 9, 27
+        self.layers_conv = nn.ModuleList(layers_conv)
+        self.layers_bn = nn.ModuleList(layers_bn)
+        
+    def _forward_blocks(self, pos2D):
+        # pos2D: B x 15 * 2 x 27
+        x = self.drop(self.relu(self.expand_bn(self.expand_conv(pos2D)))) # B x 1024 x 25
+        for i in range(len(self.pad) - 1):
+            pad = self.pad[i+1] # 3, 9
+            res = x[:, :, pad : x.shape[2] - pad] # B x 1024 x 19, B x 1024 x 1
+            x = self.drop(self.relu(self.layers_bn[2*i](self.layers_conv[2*i](x)))) # B x 1024 x 19, B x 1024 x 1
+            x = res + self.drop(self.relu(self.layers_bn[2*i + 1](self.layers_conv[2*i + 1](x))))
+        pos3D = self.shrink(x) # B x 15*3 x 1
+        return pos3D
+    
+    @staticmethod
+    def from_state_dict(params, hyperparams):
+        net = TemporalModel(*hyperparams)
+        net.load_state_dict(params)
+        return net
+
+def mpjpe(predicted, target):
+    &quot;&quot;&quot;
+    Mean per-joint position error (i.e. mean Euclidean distance),
+    often referred to as &quot;Protocol #1&quot; in many papers.
+    &quot;&quot;&quot;
+    assert predicted.shape == target.shape
+    return torch.mean(torch.norm(predicted - target, dim=len(target.shape)-1))
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">def evaluate(models, pos2D, pos3D, args):
+    for model in models:
+        model.eval()
+    with torch.no_grad():
+        inputs_2d, inputs_3d = pos2D, pos3D
+        predicted_3d_pos = [model(inputs_2d) for model in models]
+        predicted_3d_pos = sum(predicted_3d_pos) / len(predicted_3d_pos)
+        loss_3d = mpjpe(predicted_3d_pos, inputs_3d).item()
+        N = 1
+        print(f'\t{loss_3d}')
+    return loss_3d/N
+  
+def get_test_predictions(models, pos2D, args):
+    for model in models:
+        model.eval()
+    with torch.no_grad():
+        inputs_2d = pos2D
+        predicted_3d_pos = [model(inputs_2d) for model in models]
+    return predicted_3d_pos
+
+def eval_ensemble_size(n_members, iters):
+    test_scores = []
+    for i in iters:
+        models = []
+        for j in range(n_members):
+            params_path = f'{ROOTDIR}/saved_models/humaneva/checkpoints/supervised/{n_members}_members_ensemble{j}_iter{i}.ckpt'
+            params = torch.load(params_path, map_location=torch.device(&quot;cpu&quot;))
+            models.append(TemporalModel.from_state_dict(params, hyperparams))
+        test_score = evaluate(models, pos2D_test, pos3D_test, args)
+        test_scores.append(test_score)
+        
+    return test_scores
+            
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">x = list(range(0,100,5))
+x.append(99)
+
+#ensemble_sizes = [1, 2, 3]
+ensemble_sizes = [5]
+#test_scores_dict = {}
+
+for size in ensemble_sizes:
+    test_scores_dict[size] = eval_ensemble_size(size, x)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">for size, test_scores in test_scores_dict.items():
+    plt.plot(x, test_scores, label=&quot;Ensemble size: {}&quot;.format(size))
+
+plt.ylabel(&quot;Test error&quot;)
+plt.xlabel(&quot;Training iterations&quot;)    
+plt.legend()
+plt.show()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">def get_all_preds(iter_):
+    
+    ensemble_sizes = [1, 2, 3, 5]
+    pairs = []
+    
+    for size in ensemble_sizes:
+        for i in range(size):
+            pairs.append((size, i))
+    
+    models = []
+    
+    for i,j in pairs:
+        params_path = &quot;/dbfs/VideoPose3D/saved_models/humaneva/checkpoints/supervised/{}_members_ensemble{}_iter{}.ckpt&quot;.format(i,j,iter_)
+        params = torch.load(params_path, map_location=torch.device(&quot;cpu&quot;))
+        models.append(TemporalModel.from_state_dict(params, hyperparams))
+        
+    test_preds = get_test_predictions(models, pos2D_test, args)
+        
+    return test_preds
+        
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">test_preds = get_all_preds(99)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">from random import sample
+
+def eval_last_iteration(test_preds):
+    n_samples = 30
+    sizes = np.arange(11)+1
+    avg_test_errors = []
+    test_stdvs = []
+    for size in sizes:
+        
+        ensemble_errors = []
+        
+        for s in range(n_samples):
+            preds_subset = sample(test_preds, k=size)
+            mean_preds = torch.mean(torch.stack(preds_subset), axis=0)
+            error = mpjpe(pos3D_test, mean_preds).item()
+            ensemble_errors.append(error)
+            
+        avg_test_errors.append(sum(ensemble_errors)/len(ensemble_errors))
+        test_stdvs.append(np.std(ensemble_errors))
+        
+    return avg_test_errors, test_stdvs
+        
+mean_error, stdvs  = eval_last_iteration(test_preds)
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">plt.errorbar(np.arange(11)+1, mean_error, yerr=stdvs)
+plt.xlabel(&quot;Ensemble size&quot;)
+plt.ylabel(&quot;Test error&quot;)
+plt.show()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+</div>
+<div class="cell markdown">
+<h3 id="render-results"><a class="header" href="#render-results">Render Results</a></h3>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, azim, output, viewport,
+                     limit=-1, downsample=1, size=6, input_video_path=None, input_video_skip=0):
+    &quot;&quot;&quot;
+    Render an animation. The supported output modes are:
+     -- 'interactive': display an interactive figure
+                       (also works on notebooks if associated with %matplotlib inline)
+     -- 'html': render the animation as HTML5 video. Can be displayed in a notebook using HTML(...).
+     -- 'filename.mp4': render and export the animation as an h264 video (requires ffmpeg).
+     -- 'filename.gif': render and export the animation a gif file (requires imagemagick).
+    &quot;&quot;&quot;
+    plt.ioff()
+    fig = plt.figure(figsize=(size*(1 + len(poses)), size))
+    ax_in = fig.add_subplot(1, 1 + len(poses), 1)
+    ax_in.get_xaxis().set_visible(False)
+    ax_in.get_yaxis().set_visible(False)
+    ax_in.set_axis_off()
+    ax_in.set_title('Input')
+
+    ax_3d = []
+    lines_3d = []
+    trajectories = []
+    radius = 1.7
+    for index, (title, data) in enumerate(poses.items()):
+        ax = fig.add_subplot(1, 1 + len(poses), index+2, projection='3d')
+        ax.view_init(elev=15., azim=azim)
+        ax.set_xlim3d([-radius/2, radius/2])
+        ax.set_zlim3d([0, radius])
+        ax.set_ylim3d([-radius/2, radius/2])
+        try:
+            ax.set_aspect('equal')
+        except NotImplementedError:
+            ax.set_aspect('auto')
+        ax.set_xticklabels([])
+        ax.set_yticklabels([])
+        ax.set_zticklabels([])
+        ax.dist = 7.5
+        ax.set_title(title) #, pad=35
+        ax_3d.append(ax)
+        lines_3d.append([])
+        trajectories.append(data[:, 0, [0, 1]])
+    poses = list(poses.values())
+
+    # Decode video
+    if input_video_path is None:
+        # Black background
+        all_frames = np.zeros((keypoints.shape[0], viewport[1], viewport[0]), dtype='uint8')
+    else:
+        # Load video using ffmpeg
+        all_frames = []
+        for f in read_video(input_video_path, skip=input_video_skip, limit=limit):
+            all_frames.append(f)
+        effective_length = min(keypoints.shape[0], len(all_frames))
+        all_frames = all_frames[:effective_length]
+        
+        keypoints = keypoints[input_video_skip:] # todo remove
+        for idx in range(len(poses)):
+            poses[idx] = poses[idx][input_video_skip:]
+        
+        if fps is None:
+            fps = get_fps(input_video_path)
+    
+    if downsample &gt; 1:
+        keypoints = downsample_tensor(keypoints, downsample)
+        all_frames = downsample_tensor(np.array(all_frames), downsample).astype('uint8')
+        for idx in range(len(poses)):
+            poses[idx] = downsample_tensor(poses[idx], downsample)
+            trajectories[idx] = downsample_tensor(trajectories[idx], downsample)
+        fps /= downsample
+
+    initialized = False
+    image = None
+    lines = []
+    points = None
+    
+    if limit &lt; 1:
+        limit = len(all_frames)
+    else:
+        limit = min(limit, len(all_frames))
+
+    parents = skeleton.parents()
+    def update_video(i):
+        nonlocal initialized, image, lines, points
+
+        for n, ax in enumerate(ax_3d):
+            ax.set_xlim3d([-radius/2 + trajectories[n][i, 0], radius/2 + trajectories[n][i, 0]])
+            ax.set_ylim3d([-radius/2 + trajectories[n][i, 1], radius/2 + trajectories[n][i, 1]])
+
+        # Update 2D poses
+        joints_right_2d = keypoints_metadata['keypoints_symmetry'][1]
+        colors_2d = np.full(keypoints.shape[1], 'black')
+        colors_2d[joints_right_2d] = 'red'
+        if not initialized:
+            image = ax_in.imshow(all_frames[i], aspect='equal')
+            
+            for j, j_parent in enumerate(parents):
+                if j_parent == -1:
+                    continue
+                    
+                if len(parents) == keypoints.shape[1] and keypoints_metadata['layout_name'] != 'coco':
+                    # Draw skeleton only if keypoints match (otherwise we don't have the parents definition)
+                    lines.append(ax_in.plot([keypoints[i, j, 0], keypoints[i, j_parent, 0]],
+                                            [keypoints[i, j, 1], keypoints[i, j_parent, 1]], color='pink'))
+
+                col = 'red' if j in skeleton.joints_right() else 'black'
+                for n, ax in enumerate(ax_3d):
+                    pos = poses[n][i]
+                    lines_3d[n].append(ax.plot([pos[j, 0], pos[j_parent, 0]],
+                                               [pos[j, 1], pos[j_parent, 1]],
+                                               [pos[j, 2], pos[j_parent, 2]], zdir='z', c=col))
+
+            points = ax_in.scatter(*keypoints[i].T, 10, color=colors_2d, edgecolors='white', zorder=10)
+
+            initialized = True
+        else:
+            image.set_data(all_frames[i])
+
+            for j, j_parent in enumerate(parents):
+                if j_parent == -1:
+                    continue
+                
+                if len(parents) == keypoints.shape[1] and keypoints_metadata['layout_name'] != 'coco':
+                    lines[j-1][0].set_data([keypoints[i, j, 0], keypoints[i, j_parent, 0]],
+                                           [keypoints[i, j, 1], keypoints[i, j_parent, 1]])
+
+                for n, ax in enumerate(ax_3d):
+                    pos = poses[n][i]
+                    lines_3d[n][j-1][0].set_xdata(np.array([pos[j, 0], pos[j_parent, 0]]))
+                    lines_3d[n][j-1][0].set_ydata(np.array([pos[j, 1], pos[j_parent, 1]]))
+                    lines_3d[n][j-1][0].set_3d_properties(np.array([pos[j, 2], pos[j_parent, 2]]), zdir='z')
+
+            points.set_offsets(keypoints[i])
+        
+        print('{}/{}      '.format(i, limit), end='\r')
+        
+
+    fig.tight_layout()
+    
+    anim = FuncAnimation(fig, update_video, frames=np.arange(0, limit), interval=1000/fps, repeat=False)
+    if output.endswith('.mp4'):
+        Writer = writers['ffmpeg']
+        writer = Writer(fps=fps, metadata={}, bitrate=bitrate)
+        anim.save(output, writer=writer)
+    elif output.endswith('.gif'):
+        anim.save(output, dpi=80, writer='imagemagick')
+    else:
+        raise ValueError('Unsupported output format (only .mp4 and .gif are supported)')
+    plt.close()
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">print('Rendering...')    
+input_keypoints = keypoints[args.viz_subject][args.viz_action][args.viz_camera].copy()
+ground_truth = None
+if args.viz_subject in dataset.subjects() and args.viz_action in dataset[args.viz_subject]:
+    if 'positions_3d' in dataset[args.viz_subject][args.viz_action]:
+        ground_truth = dataset[args.viz_subject][args.viz_action]['positions_3d'][args.viz_camera].copy()
+if ground_truth is None:
+    print('INFO: this action is unlabeled. Ground truth will not be rendered.')
+
+gen = UnchunkedGenerator(None,
+                         None,
+                         [input_keypoints],
+                         pad=pad,
+                         causal_shift=causal_shift,
+                         augment=args.test_time_augmentation,
+                         kps_left=kps_left,
+                         kps_right=kps_right,
+                         joints_left=joints_left,
+                         joints_right=joints_right)
+prediction = evaluate(gen, return_predictions=True)
+if model_traj is not None and ground_truth is None:
+    prediction_traj = evaluate(gen, return_predictions=True, use_trajectory_model=True)
+    prediction += prediction_traj
+
+if args.viz_export is not None:
+    print('Exporting joint positions to', args.viz_export)
+    # Predictions are in camera space
+    np.save(args.viz_export, prediction)
+
+if args.viz_output is not None:
+    if ground_truth is not None:
+        # Reapply trajectory
+        trajectory = ground_truth[:, :1]
+        ground_truth[:, 1:] += trajectory
+        prediction += trajectory
+
+    # Invert camera transformation
+    cam = dataset.cameras()[args.viz_subject][args.viz_camera]
+    if ground_truth is not None:
+        prediction = camera_to_world(prediction, R=cam['orientation'], t=cam['translation'])
+        ground_truth = camera_to_world(ground_truth, R=cam['orientation'], t=cam['translation'])
+    else:
+        # If the ground truth is not available, take the camera extrinsic params from a random subject.
+        # They are almost the same, and anyway, we only need this for visualization purposes.
+        for subject in dataset.cameras():
+            if 'orientation' in dataset.cameras()[subject][args.viz_camera]:
+                rot = dataset.cameras()[subject][args.viz_camera]['orientation']
+                break
+        prediction = camera_to_world(prediction, R=rot, t=0)
+        # We don't have the trajectory, but at least we can rebase the height
+        prediction[:, :, 2] -= np.min(prediction[:, :, 2])
+
+    anim_output = {'Reconstruction': prediction}
+    if ground_truth is not None and not args.viz_no_ground_truth:
+        anim_output['Ground truth'] = ground_truth
+
+    input_keypoints = image_coordinates(input_keypoints[..., :2], w=cam['res_w'], h=cam['res_h'])
+
+    render_animation(input_keypoints, keypoints_metadata, anim_output,
+                     dataset.skeleton(), dataset.fps(), args.viz_bitrate, cam['azimuth'], args.viz_output,
+                     limit=args.viz_limit, downsample=args.viz_downsample, size=args.viz_size,
+                     input_video_path=args.viz_video, viewport=(cam['res_w'], cam['res_h']),
+</code></pre>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/02_Main.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/099_extra_Data_Preprocessing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/02_Main.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../../contents/student-project-09_group-DistEnsembles/student-project-09_group-DistEnsembles/099_extra_Data_Preprocessing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
