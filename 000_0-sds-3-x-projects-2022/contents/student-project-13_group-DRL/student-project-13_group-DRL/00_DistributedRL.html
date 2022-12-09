@@ -160,6 +160,9 @@
 </ul>
 </div>
 <div class="cell markdown">
+<p><a href="https://www.youtube.com/watch?v=dLI7rfPyC-s"><img src="http://img.youtube.com/vi/dLI7rfPyC-s/0.jpg" alt="ScaDaMaLe WASP-UU 2022 - Student Group Project 13 - Distributed Reinforcement Learning" /></a></p>
+</div>
+<div class="cell markdown">
 <p><strong>Project description</strong></p>
 <p>We extend the <a href="https://arxiv.org/pdf/1707.06347.pdf">Proximal Policy Optimization (PPO)</a> and <a href="https://arxiv.org/pdf/1801.01290.pdf">Soft Actor-Critic (SAC)</a> reinforcement learning algorithms from the <code>stable_baselines3</code> library to make them run in a distributed fashion.</p>
 <p>We use <a href="https://github.com/horovod/horovod">Horovod</a>, which is a distributed deep learning training framework that supports several ML libraries, including <a href="https://pytorch.org/">PyTorch</a> through the <code>horovod.torch</code> package. But more importantly, it can be run on top of spark using <code>sparkdl.HorovodRunner</code>. The HorovodRunner launches spark jobs on training functions that implement the Horovod framework. All that is needed to utilize the Horovod framework is to wrap the original <code>torch.optim.Optimizer</code> optimizer in a <code>horovod.torch.DistributedOptimizer</code>.</p>
