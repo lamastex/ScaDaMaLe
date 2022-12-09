@@ -157,7 +157,7 @@
 </ul>
 </div>
 <div class="cell markdown">
-<p><a href="https://www.youtube.com/watch?v=2MHtbhYqsiQ"><img src="http://img.youtube.com/vi/2MHtbhYqsiQ/0.jpg" alt="ScaDaMaLe UU 2022 - Student Group Project Presentations" /></a></p>
+<p><a href="https://www.youtube.com/watch?v=2MHtbhYqsiQ"><img src="http://img.youtube.com/vi/2MHtbhYqsiQ/0.jpg" alt="ScaDaMaLe WASP-UU 2022 - Student Group Project 01 - Graph of Wikipedia" /></a></p>
 </div>
 <div class="cell markdown">
 <h2 id="background"><a class="header" href="#background">Background</a></h2>
@@ -161135,6 +161135,10 @@ computeDistanceToTarget(&quot;List_of_Saint_Seiya_Episode.G_characters&quot;, re
 </ul>
 </div>
 <div class="cell markdown">
+<p>Note: due to technical network errors the students will provide a recording.</p>
+<p><a href="https://www.youtube.com/watch?v=5NBjLwC5-Sw&amp;start=4s&amp;end=26m52s"><img src="http://img.youtube.com/vi/5NBjLwC5-Sw/0.jpg" alt="ScaDaMaLe UU 2022 - Student Group Project Presentations" /></a></p>
+</div>
+<div class="cell markdown">
 <h2 id="task-description"><a class="header" href="#task-description">Task Description</a></h2>
 <p>Visual Question Answering (VQA) is the task of understanding a given image and answering questions in natural language based on the image. This is a challenging task as it requires reasoning about two different data modalities (text and image) in conjunction. An additional challenge is to generate an answer to the question in natural language. Such a system enables multimodal interaction with humans and one useful application is in assistive technologies for visually challenged individuals. A general framework to solve this task involves the following steps:</p>
 <ul>
@@ -161633,6 +161637,9 @@ parallelize(model, num_gpus=2, fp16=True, verbose='detail')
 </ul>
 </div>
 <div class="cell markdown">
+<p><a href="https://www.youtube.com/watch?v=ng6AO7u_Sbs"><img src="http://img.youtube.com/vi/ng6AO7u_Sbs/0.jpg" alt="ScaDaMaLe UU 2022 - Student Group Project Presentations" /></a></p>
+</div>
+<div class="cell markdown">
 <h4 id="content--presenter"><a class="header" href="#content--presenter">Content (→ <strong>Presenter</strong>)</a></h4>
 <ol>
 <li>Introduction → <strong>Jingru</strong><br> 1.1 Federated Learning in medical field<br> 1.2 Brain tumor segmentation<br> 1.3 Hierarchy of presentation and code<br></li>
@@ -162025,7 +162032,7 @@ valid_generator = DataGenerator(val_ids)
  <img src="https://storage.googleapis.com/gweb-cloudblog-publish/images/Screen_Shot_2021-08-23_at_2.25.47_PM.max-700x700.png" alt="drawing" width="500"/>
 </p>
 <p>The distributed learning process can be summarized as follow: 1. Each GPU performs a forward pass on a different slice of the input data to compute the loss 2. Each GPU compute the gradient based ont he loss functions 3. The gradients are aggregated accross each of the devices, via an All-Reduce algorigm 4. The optimizer updates the weights using the reduced gradient, thereby keeping the devices in sync</p>
-<p>An All-Reduce algorithm here is refered to as an operation that reduce a set of arrays on distributed workers into a single array that is distributed back to each of these workers <p float="left"> <img src="contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/files/tables/images/gradient.PNG" alt="drawing" width="500"/> <img src="https://ars.els-cdn.com/content/image/1-s2.0-S2095809916309468-gr5.jpg" alt="drawing" width="500"/> </p></p>
+<p>An All-Reduce algorithm here is refered to as an operation that reduce a set of arrays on distributed workers into a single array that is distributed back to each of these workers <p float="left"> <img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/images/ScaDaMaLe/2022-WASP/group-4/gradient.PNG" alt="drawing" width="500"/> <img src="https://ars.els-cdn.com/content/image/1-s2.0-S2095809916309468-gr5.jpg" alt="drawing" width="500"/> </p></p>
 <p>In distributed training, an additional computation is performed at the end of each training step where all workers exchange with each other the gradients and calculate the average</p>
 <p>This approach been implemented using <code>tf.distribute.MirroredStrategy</code> from <code>Tensorflow</code> which supports synchronous distributed training on multiple GPUs on one machine. It creates one replica per GPU device. Each variable in the model is mirrored across all the replicas. Together, these variables form a single conceptual variable called MirroredVariable. These variables are kept in sync with each other by applying identical updates.</p>
 </div>
@@ -162099,7 +162106,7 @@ def specificity(y_true, y_pred):
 <div class="cell markdown">
 <h4 id="u-net-architectures"><a class="header" href="#u-net-architectures">U-Net Architectures</a></h4>
 <p>U-net is a special type of architecture for semantic image segmentation purposes [1], it consists of two main paths namely the encoder and the decoder * The encoder or contracting path: Similar to a regular CNN, it tries to understand the what of the image, it does it by using convolutions and max pooling * The decoder or expansion path: which is responsible to find the where part of the image by applying sequences of up-convolutions and concatenations with features from the corresponding contracting path</p>
-<p><img src="contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/files/tables/images/unet-1.PNG" alt="U-net architecture" /></p>
+<p><img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/images/ScaDaMaLe/2022-WASP/group-4/unet-1.PNG" alt="U-net architecture" /></p>
 <p>The contracting and expansive paths are connected by a series of concatenation and skip connections, which helps to retain spatial information and improve the performance of the network.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
@@ -162158,7 +162165,7 @@ def build_unet(inputs, ker_init, dropout):
 <h4 id="federated-learning"><a class="header" href="#federated-learning">Federated Learning</a></h4>
 <p>Unlinke the centralized learning, in <strong>Federated Learning</strong>, Institutions do not share their data but instead train a shared model locally and only send model updates to the central server. The server accumulates and aggregates the individual updates to yield a global model and then forwards the new shared parameters to each client for further training. Once the model updates have been applied, they are discarded by the central server as they are only required for enhancing the current global model.</p>
 <p>The training process of the Federated Learning system we implemented can be summarized as follow: 1. The collaborator or institution receives the global model updates from the server and locally trains on their local data and sends the local model updates to the central server. 2. The central server receives the local model updates and performs secure aggregation without learning information about any collaborator to yield a global model. 3. The central server forwards the new shared parameters to the collaborators for further training. 4. Go back to 1 for another federated round.</p>
-<p><img src="contents/student-project-04_group-FedMLMedicalApp/student-project-04_group-FedMLMedicalApp/files/tables/images/fed.PNG" alt="Federated learning" /></p>
+<p><img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/images/ScaDaMaLe/2022-WASP/group-4/fed.PNG" alt="Federated learning" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">input_layer = Input((IMG_SIZE, IMG_SIZE, 2))
@@ -163879,6 +163886,9 @@ print('\nTraining Done!')
 </ul>
 </div>
 <div class="cell markdown">
+<p><a href="https://www.youtube.com/watch?v=Q6vkJJfjteg"><img src="http://img.youtube.com/vi/Q6vkJJfjteg/0.jpg" alt="ScaDaMaLe WASP-UU 2022 - Student Group Project 05 - Scalable Bayes. opt. w/ dist. Gzn. procs. &amp; DKrL" /></a></p>
+</div>
+<div class="cell markdown">
 <h4 id="background-1"><a class="header" href="#background-1">Background</a></h4>
 <p>In many practical applications, one is challenged with optimizing functions that are expensive-to-evaluate and whose form is unknown.</p>
 <p><img src="https://github.com/LeoIV/scalable-gps/raw/dkl/data/applications.png" alt="Hard optimization problems" /></p>
@@ -164868,6 +164878,9 @@ def save(X: torch.Tensor, y: torch.Tensor, save_path: str, optimizer_name: str, 
 <li>Livia Qian, KTH</li>
 <li>Rajmund Nagy, KTH</li>
 </ul>
+</div>
+<div class="cell markdown">
+<p><a href="https://www.youtube.com/watch?v=w1tQDg8Kz44"><img src="http://img.youtube.com/vi/w1tQDg8Kz44/0.jpg" alt="ScaDaMaLe WASP-UU 2022 - Student Group Project 07 - Experiments with ZerO initialisation" /></a></p>
 </div>
 <div class="cell markdown">
 <h2 id="summary-1"><a class="header" href="#summary-1">Summary</a></h2>
@@ -166457,6 +166470,9 @@ plt.show()
 </ul>
 </div>
 <div class="cell markdown">
+<p><a href="https://www.youtube.com/watch?v=BVMODckduGc"><img src="http://img.youtube.com/vi/BVMODckduGc/0.jpg" alt="ScaDaMaLe WASP-UU 2022 - Student Group Project 08 - Smart Search in Wikipedia" /></a></p>
+</div>
+<div class="cell markdown">
 <h2 id="introduction-1"><a class="header" href="#introduction-1">Introduction</a></h2>
 <ul>
 <li>Swedish Wikipedia is the foruth largest language edition of Wikipedia.</li>
@@ -167116,6 +167132,9 @@ for i, (namespace, title) in enumerate(top_ranked_namespaces_and_titles):
 <li>Yaroslava Lochman, Chalmers University of Technology</li>
 <li>Erik Wallin, Chalmers University of Technology</li>
 </ul>
+</div>
+<div class="cell markdown">
+<p><a href="https://www.youtube.com/watch?v=n5HPRMHH57Y"><img src="http://img.youtube.com/vi/n5HPRMHH57Y/0.jpg" alt="ScaDaMaLe WASP-UU 2022 - Student Group Project 09 - Distrib. Ensembles for 3D Human Pose Estimation" /></a></p>
 </div>
 <div class="cell markdown">
 <h2 id="introduction-2"><a class="header" href="#introduction-2">Introduction</a></h2>
@@ -169854,6 +169873,9 @@ if args.viz_output is not None:
 </ul>
 </div>
 <div class="cell markdown">
+<p><a href="https://www.youtube.com/watch?v=-m6hzM8lEGA"><img src="http://img.youtube.com/vi/-m6hzM8lEGA/0.jpg" alt="ScaDaMaLe WASP-UU 2022 - Student Group Project 10 - Predicting the load in wireless networks" /></a></p>
+</div>
+<div class="cell markdown">
 <p><img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/images/ScaDaMaLe/2022-WASP/group-10/Picture1.jpeg" alt="" /></p>
 </div>
 <div class="cell markdown">
@@ -169871,7 +169893,7 @@ if args.viz_output is not None:
 </ul>
 </div>
 <div class="cell markdown">
-<img src ='files/tables/RDI/Load_evolution1.jpg'>
+<img src ='https://raw.githubusercontent.com/lamastex/scalable-data-science/master/images/ScaDaMaLe/2022-WASP/group-10/Load_evolution1.jpg'>
 </div>
 <div class="cell markdown">
 <h2 id="dataset-1"><a class="header" href="#dataset-1">Dataset</a></h2>
@@ -170883,6 +170905,9 @@ plt.show()
 <li>Robert Bereza, KTH Royal Institute of Technology</li>
 <li>Damianos Tranos, KTH Royal Institute of Technology</li>
 </ul>
+</div>
+<div class="cell markdown">
+<p><a href="https://www.youtube.com/watch?v=wG8Hn-NyNXg"><img src="http://img.youtube.com/vi/wG8Hn-NyNXg/0.jpg" alt="ScaDaMaLe WASP-UU 2022 - Student Group Project 11 - Collaborative Filtering in Movie Recommender Sys" /></a></p>
 </div>
 <div class="cell markdown">
 <h3 id="collaborative-filtering"><a class="header" href="#collaborative-filtering">Collaborative Filtering</a></h3>
@@ -172191,7 +172216,7 @@ MSE: Double = 17.142201953816162
 </div>
 <div style="break-before: page; page-break-before: always;"></div><div class="cell markdown">
 <h1 id="federated-learning-using-horovod"><a class="header" href="#federated-learning-using-horovod">Federated Learning Using Horovod</a></h1>
-<h2 id="project-members"><a class="header" href="#project-members">Project members:</a></h2>
+<p><strong>Project members:</strong></p>
 <ul>
 <li><strong>Amandine Caut</strong>: Department of Mathematics, Uppsala University</li>
 <li><strong>Ali Dadras</strong>: Department of Mathematics and Mathematical Statistics, Umeå University</li>
@@ -174300,12 +174325,7 @@ print('Latest checkpoint: ', latest_checkpoint)
 <div style="break-before: page; page-break-before: always;"></div><div class="cell markdown">
 <h1 id="conclusion-and-brintsusv"><a class="header" href="#conclusion-and-brintsusv">CONCLUSION and BrIntSuSv</a></h1>
 <p><strong>BrIntSuSv</strong> := Brainstorming Interaction around &quot;WASP brainstorms for hypothetical AMPsPl-DSProcess pitches to M. Wallenberg and the Board to actualise its focus on <em>Sustainable Sverige</em></p>
-</div>
-<div class="cell markdown">
-<ul>
-<li>embed video clip of raaz's conclusions here</li>
-</ul>
-<p><a href="https://www.youtube.com/watch?v=G8eNWzxOgqE?rel=0&amp;autoplay=1&amp;modestbranding=1&amp;start=4&amp;end=50"><img src="http://img.youtube.com/vi/G8eNWzxOgqE/0.jpg" alt="Udacity: Deep Learning by Vincent Vanhoucke - Training a logistic classifier" /></a></p>
+<p>This was a pure face-to-face tranmission</p>
 </div>
 <div class="cell markdown">
 <h2 id="teaching-assistance"><a class="header" href="#teaching-assistance">Teaching Assistance</a></h2>
@@ -174314,7 +174334,7 @@ print('Latest checkpoint: ', latest_checkpoint)
 <p>Thanks to <a href="contents/student-projects-BrIntSuSvConclusion/student-projects-BrIntSuSvConclusion/www.linkedin.com/in/oskar-%C3%A5sbrink-847a76231">Oskar Åsbrink</a> with partial support from Combient Mix AB (through summer internship?) at Combient Competence Centre for Data Engineering Sciences, Department of Mathematics, Uppsala University, Uppsala, Sweden.</p>
 </li>
 <li>
-<p>video of cube</p>
+<p>Enjoy a video of young Oskar at the Swedish Open in Rubik's cube</p>
 </li>
 </ul>
 <p><a href="https://www.youtube.com/watch?v=LRb4hGhKqpc"><img src="http://img.youtube.com/vi/LRb4hGhKqpc/0.jpg" alt="Stockholm Open Oskar Åsbrink Finals 3x3 9.63" /></a></p>

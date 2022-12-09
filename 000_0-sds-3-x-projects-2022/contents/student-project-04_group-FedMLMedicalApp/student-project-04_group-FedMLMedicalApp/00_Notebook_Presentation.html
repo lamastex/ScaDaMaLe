@@ -155,6 +155,9 @@
 </ul>
 </div>
 <div class="cell markdown">
+<p><a href="https://www.youtube.com/watch?v=ng6AO7u_Sbs"><img src="http://img.youtube.com/vi/ng6AO7u_Sbs/0.jpg" alt="ScaDaMaLe UU 2022 - Student Group Project Presentations" /></a></p>
+</div>
+<div class="cell markdown">
 <h4 id="content--presenter"><a class="header" href="#content--presenter">Content (→ <strong>Presenter</strong>)</a></h4>
 <ol>
 <li>Introduction → <strong>Jingru</strong><br> 1.1 Federated Learning in medical field<br> 1.2 Brain tumor segmentation<br> 1.3 Hierarchy of presentation and code<br></li>
@@ -547,7 +550,7 @@ valid_generator = DataGenerator(val_ids)
  <img src="https://storage.googleapis.com/gweb-cloudblog-publish/images/Screen_Shot_2021-08-23_at_2.25.47_PM.max-700x700.png" alt="drawing" width="500"/>
 </p>
 <p>The distributed learning process can be summarized as follow: 1. Each GPU performs a forward pass on a different slice of the input data to compute the loss 2. Each GPU compute the gradient based ont he loss functions 3. The gradients are aggregated accross each of the devices, via an All-Reduce algorigm 4. The optimizer updates the weights using the reduced gradient, thereby keeping the devices in sync</p>
-<p>An All-Reduce algorithm here is refered to as an operation that reduce a set of arrays on distributed workers into a single array that is distributed back to each of these workers <p float="left"> <img src="files/tables/images/gradient.PNG" alt="drawing" width="500"/> <img src="https://ars.els-cdn.com/content/image/1-s2.0-S2095809916309468-gr5.jpg" alt="drawing" width="500"/> </p></p>
+<p>An All-Reduce algorithm here is refered to as an operation that reduce a set of arrays on distributed workers into a single array that is distributed back to each of these workers <p float="left"> <img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/images/ScaDaMaLe/2022-WASP/group-4/gradient.PNG" alt="drawing" width="500"/> <img src="https://ars.els-cdn.com/content/image/1-s2.0-S2095809916309468-gr5.jpg" alt="drawing" width="500"/> </p></p>
 <p>In distributed training, an additional computation is performed at the end of each training step where all workers exchange with each other the gradients and calculate the average</p>
 <p>This approach been implemented using <code>tf.distribute.MirroredStrategy</code> from <code>Tensorflow</code> which supports synchronous distributed training on multiple GPUs on one machine. It creates one replica per GPU device. Each variable in the model is mirrored across all the replicas. Together, these variables form a single conceptual variable called MirroredVariable. These variables are kept in sync with each other by applying identical updates.</p>
 </div>
@@ -621,7 +624,7 @@ def specificity(y_true, y_pred):
 <div class="cell markdown">
 <h4 id="u-net-architectures"><a class="header" href="#u-net-architectures">U-Net Architectures</a></h4>
 <p>U-net is a special type of architecture for semantic image segmentation purposes [1], it consists of two main paths namely the encoder and the decoder * The encoder or contracting path: Similar to a regular CNN, it tries to understand the what of the image, it does it by using convolutions and max pooling * The decoder or expansion path: which is responsible to find the where part of the image by applying sequences of up-convolutions and concatenations with features from the corresponding contracting path</p>
-<p><img src="files/tables/images/unet-1.PNG" alt="U-net architecture" /></p>
+<p><img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/images/ScaDaMaLe/2022-WASP/group-4/unet-1.PNG" alt="U-net architecture" /></p>
 <p>The contracting and expansive paths are connected by a series of concatenation and skip connections, which helps to retain spatial information and improve the performance of the network.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
@@ -680,7 +683,7 @@ def build_unet(inputs, ker_init, dropout):
 <h4 id="federated-learning"><a class="header" href="#federated-learning">Federated Learning</a></h4>
 <p>Unlinke the centralized learning, in <strong>Federated Learning</strong>, Institutions do not share their data but instead train a shared model locally and only send model updates to the central server. The server accumulates and aggregates the individual updates to yield a global model and then forwards the new shared parameters to each client for further training. Once the model updates have been applied, they are discarded by the central server as they are only required for enhancing the current global model.</p>
 <p>The training process of the Federated Learning system we implemented can be summarized as follow: 1. The collaborator or institution receives the global model updates from the server and locally trains on their local data and sends the local model updates to the central server. 2. The central server receives the local model updates and performs secure aggregation without learning information about any collaborator to yield a global model. 3. The central server forwards the new shared parameters to the collaborators for further training. 4. Go back to 1 for another federated round.</p>
-<p><img src="files/tables/images/fed.PNG" alt="Federated learning" /></p>
+<p><img src="https://raw.githubusercontent.com/lamastex/scalable-data-science/master/images/ScaDaMaLe/2022-WASP/group-4/fed.PNG" alt="Federated learning" /></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">input_layer = Input((IMG_SIZE, IMG_SIZE, 2))
