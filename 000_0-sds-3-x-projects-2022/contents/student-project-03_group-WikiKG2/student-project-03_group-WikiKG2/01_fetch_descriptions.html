@@ -148,20 +148,21 @@
                         <div class="cell markdown">
 <h1 id="fetching-the-descriptions"><a class="header" href="#fetching-the-descriptions">Fetching the descriptions</a></h1>
 <p>The original data did not contain any text descriptions of the different entities and relations. In order to perform interesting analysis of the knowledge graph we had to fetch textual descriptions and associat them with the data. The following script can be used to fetch textual descriptions for the different entities in the graph.</p>
-<p><em>NOTE</em>: The script was not run on the actual cluster, but on a local server. The descriptions were then uploaded to the databricks cluster, but we include this part for the sake of completion. If it is of interest it should be straightforward to run the same thing on the Databricks cluster.</p>
+<p><strong>NOTE</strong>: The script was not run on the actual cluster, but on a local server. The descriptions were then uploaded to the databricks cluster, but we include this part for the sake of completion. If it is of interest it should be straightforward to run the same thing on the Databricks cluster.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">import pandas as pd
-from wikidata.client import Client
+from wikidata.client import Client # Make sure wikidata is installed
 from tqdm import tqdm
 from collections import defaultdict
-import requests
+import requests # Make sure requests is installed
 import time
-import urllib
+import urllib # Make sure urllib is installed
 
 
 TIMEOUT = 0.5
 BATCHSIZE = 400
+# Prioritize english as language, then swedish
 LANGUAGE_PRIORITY = dict([(x.lower(), i) if x.lower()[:2] != &quot;en&quot; else (x.lower(),0) for i, x in enumerate([&quot;EN&quot;, &quot;EN-CA&quot;, &quot;EN-GB&quot;, &quot;EN-AU&quot;,  &quot;SV&quot;, &quot;DE&quot;, &quot;ES&quot;, &quot;PT&quot;, &quot;PT-BR&quot;, &quot;NL&quot;, &quot;IT&quot;, &quot;FR&quot;, &quot;ZH&quot;, &quot;JA&quot;, &quot;AR&quot;,   &quot;RU&quot;, &quot;EL&quot;])])
 SERVICEURL = &quot;https://query.wikidata.org/sparql&quot;
 

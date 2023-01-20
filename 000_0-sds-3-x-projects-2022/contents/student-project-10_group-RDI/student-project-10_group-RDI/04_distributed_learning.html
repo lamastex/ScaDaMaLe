@@ -145,7 +145,11 @@
 
                 <div id="content" class="content">
                     <main>
-                        <div class="cell code" execution_count="1" scrolled="false">
+                        <div class="cell markdown">
+<h2 id="distributed-learning"><a class="header" href="#distributed-learning">Distributed learning</a></h2>
+<p>In this notebok, we will train recurrent neural networks in a distributed manner using Horovod runner, in order to predict the load in the network. We start off by loading the first two notebooks so we can acess the data set and compare the RNN to the baseline model.</p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-run">./01_prepare_data
 </code></pre>
 </div>
@@ -184,7 +188,7 @@ def get_model_lstm(x_shape_1, x_shape_2, x_aux_shape_1):
     from tensorflow.keras.models import Model
     
     main_input = Input(shape=(x_shape_1, x_shape_2), name='main_input')
-    lstm_out = LSTM(50)(main_input)
+    lstm_out = LSTM(50)(main_input) # One LSTM layer with 50 hidden units
     aux_input = Input(shape=(x_aux_shape_1,), name='aux_input')
     x = concatenate([lstm_out, aux_input])
     x = Dense(64, activation='relu')(x)
@@ -220,7 +224,7 @@ def get_model_gru(x_shape_1, x_shape_2, x_aux_shape_1):
     from tensorflow.keras.models import Model
     
     main_input = Input(shape=(x_shape_1, x_shape_2), name='main_input')
-    gru_out = GRU(50)(main_input)
+    gru_out = GRU(50)(main_input) # One GRU layer with 50 hidden units
     aux_input = Input(shape=(x_aux_shape_1,), name='aux_input')
     x = concatenate([gru_out, aux_input])
     x = Dense(64, activation='relu')(x)
@@ -249,7 +253,7 @@ def get_model_gru_deep(x_shape_1, x_shape_2, x_aux_shape_1):
     
     main_input = Input(shape=(x_shape_1, x_shape_2), name='main_input')
     gru_1 = GRU(60, return_sequences=True)(main_input)
-    gru_2 = GRU(60, return_sequences=True)(gru_1)
+    gru_2 = GRU(60, return_sequences=True)(gru_1) # Two GRU layers with 60 hidden units.
     gru_out = GRU(60)(gru_2)
     aux_input = Input(shape=(x_aux_shape_1,), name='aux_input')
     x = concatenate([gru_out, aux_input])
@@ -274,7 +278,7 @@ import time
 # Remove any existing checkpoint files
 #dbutils.fs.rm((&quot;/ml/RDI/train&quot;), recurse=True)
  
-# Create directory
+# Create directory to read and save files.
 checkpoint_dir = '/dbfs/ml/RDI/train/{}/'.format(time.time())
 os.makedirs(checkpoint_dir)
 print(checkpoint_dir)
@@ -382,6 +386,7 @@ hr.run(train_hvd, get_model=get_model_gru_deep, train_data = train_data, test_da
 </div>
 <div class="cell markdown">
 <h2 id="evaluation"><a class="header" href="#evaluation">Evaluation</a></h2>
+<p>Now that the models have been trained and saved in the directory, we eil evaluate their performance and compare them to the bsaeline AR model.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">import tensorflow as tf
@@ -393,13 +398,11 @@ hr.run(train_hvd, get_model=get_model_gru_deep, train_data = train_data, test_da
 import tensorflow.keras
 
 dir1 = '/dbfs/ml/RDI/train/'
-#checkpoint_dir = dir1 + os.listdir(dir1)[-3] + '/' #using 3 last samples
 checkpoint_dir = dir1 + os.listdir(dir1)[3] + '/' #using 3 last samples + yesterday
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python"># Evaluate the LSTM model
-hvd_model_lstm = get_model_lstm(x_test.shape[1], x_test.shape[2], x_aux_test.shape[1])
 hvd_model_lstm = get_model_lstm(x_test.shape[1], x_test.shape[2], x_aux_test.shape[1])
 hvd_model_lstm.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
                 loss='mean_squared_error',
@@ -438,6 +441,7 @@ print(&quot;loaded model loss and accuracy:&quot;, loss_deep, accuracy_deep)
 </div>
 <div class="cell markdown">
 <h2 id="plots"><a class="header" href="#plots">Plots</a></h2>
+<p>To compare all models in an illustrative way, their performance on the test dataset will be plotted.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">import seaborn as sns
@@ -477,7 +481,8 @@ df_test1 = df_test.select(&quot;*&quot;,round(&quot;cellID&quot;)).show()
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">def plot_prediction_04(df_plot, startTime, endTime):
+<pre><code class="language-python"># A function that plots the true and predicted network load for the models in this project for a specified period of time.
+def plot_prediction_04(df_plot, startTime, endTime):
     import matplotlib
     import matplotlib.pyplot as plt
     import numpy as np
@@ -516,20 +521,23 @@ df_test1 = df_test.select(&quot;*&quot;,round(&quot;cellID&quot;)).show()
 <pre><code class="language-python">df_plot1 = lr_predictions.select(&quot;prediction&quot;,&quot;rdiTimeStamp&quot;,&quot;normalized_pmRadioThpVolDl&quot;).toPandas()
 df_plot1 = df_plot1[67:]
 
+# Converting from bits to MB
 yhatl = hvd_model_lstm.predict([x_test, x_aux_test])*load_m/8000
 df_plot1['LSTM'] = yhatl
 yhatg = hvd_model_gru.predict([x_test, x_aux_test])*load_m/8000
 df_plot1['GRU'] = yhatg
 yhatg1 = hvd_model_gru_deep.predict([x_test, x_aux_test])*load_m/8000
 df_plot1['GRU_deep'] = yhatg1
-
 df_plot1['pmRadioThpVolDl'] = (df_plot1['normalized_pmRadioThpVolDl'] + averages[0])/8000
 df_plot1['prediction'] = (df_plot1['prediction'] + averages[0])/8000
 df_plot1['rdiTimeStamp'] = pd.to_datetime(df_plot1.rdiTimeStamp)
 </code></pre>
 </div>
+<div class="cell markdown">
+<p>Plot of the true and predicted network load for October 13th.</p>
+</div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">plot_prediction_04(df_plot1, '2022-10-13', '2022-10-14') # using yesterday
+<pre><code class="language-python">plot_prediction_04(df_plot1, '2022-10-13', '2022-10-14')
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
@@ -541,9 +549,11 @@ y_mse_gru = np.sqrt(mean_squared_error(df_plot1['pmRadioThpVolDl'], df_plot1['GR
 y_mse_gru_deep= np.sqrt(mean_squared_error(df_plot1['pmRadioThpVolDl'], df_plot1['GRU_deep']))
 </code></pre>
 </div>
+<div class="cell markdown">
+<p>Plot of the RMSE for all models based on the test dataset.</p>
+</div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">import matplotlib.pyplot as plt
-# 45 minutes back and yesterday
 plt.bar(['AR', 'LSTM', 'GRU', 'Deep_GRU'], [y_mse_ar, y_mse_lstm, y_mse_gru, y_mse_gru_deep])
 plt.ylabel('RMSE loss [MB]')
 plt.show()

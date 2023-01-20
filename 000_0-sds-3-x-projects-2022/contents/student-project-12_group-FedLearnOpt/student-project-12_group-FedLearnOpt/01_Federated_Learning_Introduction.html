@@ -169,10 +169,12 @@
 <p><strong>Clients collaborate under the orchestration of a server for finding a good global model without sharing their data.</strong></p>
 </li>
 <li>
-<p><strong>We focus on the Empirical Risk Minimization (ERM) template</strong></p>
+<p><strong>We focus on the Empirical Risk Minimization (ERM) template</strong> Indeed, consider the following finite-sum objective function: \[ f(w) = \frac{1}{N} \sum_{i=1}^{N}f_i(w)\] in which \(w\) is the optimization variable, e.g., parameters of a machine learning model, \(N\) is the number of participating devices, \(f_i\) is the local loss function on device i.</p>
 </li>
 </ul>
-<p>\[\min_{w\in \mathbb{R}^d} F(w):= \frac{1}{N}\sum_{i=1}^Nf_i(w),\] where \(w\) is the optimization variable, e.g., parameters of a machine learning model, \(N\) is the number of participating devices, \(f_i\) is the local loss function on device i.</p>
+<p>Now, assume that there are \(K\) participants (also known as clients) in a federated learning system, with \(\mathcal{D}<em>k\) denoting the dataset owned by thekth participant which \(n_k : = |\mathcal{D}<em>k|\). As a result, the previous equation can be rewritten as \[\min</em>{w\in \mathbb{R}^d} \sum</em>{k=1}^K\frac{n_k}{N}F_k(w) \quad where \quad F_k(w):= \frac{1}{n_k}\sum_{i\in \mathcal{D}<em>k}f_i(w),\] where . When the data points owned by the \(K\) participants are independent and identically distributed (i.i.d), then we have \[ \mathbb{E}</em>{D_k}[F_k(w)] = f(w),\] where the expectation \(\mathbb{E}_{D_k}[\cdot]\) is taken overthe set of data points owned by the \(k\)-th participant. This IID assumption is typically made bydistributed optimization algorithms in deep learning paradigm. If the i.i.d assumption does not hold, which is known as the non-i.i.d setting described above, the loss function \(F_k(\cdot)\) maintained at the \(k\)-th participant could be an arbitrarily bad approximation of the function \(f(\cdot)\).</p>
+<p>It is commonly assumed that the coordinator or server has the initial machine learning model, and the participants know the settings of the optimizer. For a typical implementation of distributedgradient descent with a fixed learning rate \(\eta\), in the \(t\)-th round of global model weight update,the \(k\)-th participant computes \[ g_k = \nabla F_k(w_t)\]</p>
+<p>the average gradient on its local data points at thecurrent model weight \(w_t\) and the coordinator aggregates these gradients and applies the updateof model weights according to: \[w_{t+1} = w_t - \eta \sum_{k=1}^{N}\frac{n_k}{N}g_k \] where \(\sum_{k=1}^{K}\frac{n_k}{N}g_k = \nabla f(w_t)\), provided that the data points held at different participants are i.i.d. The coordinator can then send the updated model weights \(w_{t+1}\) back to the participants.</p>
 <h3 id="fl-algorithms"><a class="header" href="#fl-algorithms">FL algorithms</a></h3>
 <ol>
 <li><strong>The server sends the initial global model to all participating devices.</strong></li>
@@ -184,12 +186,20 @@
 <center><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Federated_learning_process_central_case.png/440px-Federated_learning_process_central_case.png" /></center>
 <h3 id="challenges"><a class="header" href="#challenges">Challenges</a></h3>
 <ul>
-<li><strong>Privacy and security</strong></li>
-<li><strong>Data heterogeneity</strong></li>
-<li><strong>Computational cost</strong></li>
-<li><strong>Personalization</strong></li>
-</ul>
+<li>
+<p><strong>Privacy and security:</strong> Federated learning has distinct privacy advantages compared to data center training on persisted data. Holding even an anonymized dataset can still put user privacy at risk via joins with other data.</p>
+</li>
+<li>
+<p><strong>Data heterogeneity:</strong> The training data on a given device is usally based on the usage of the user, and hence any particular user’s local dataset will not be representative of the population distribution. Similarly, some users will make much heavier use of the service or app than others, leading to varying amounts of local training data.</p>
+</li>
+<li>
+<p><strong>Communication cost:</strong> Mobile devices are frequently offline or on slow or expensive connections</p>
+</li>
+<li>
+<p><strong>Massively distributed:</strong> We expect the number of devices participating in an optimization to be much larger than the average number of examples per device.</p>
 <h3 id="our-implementation"><a class="header" href="#our-implementation">Our implementation</a></h3>
+</li>
+</ul>
 <h4 id="fedavg"><a class="header" href="#fedavg">FedAvg</a></h4>
 <ul>
 <li><strong>Client models: CNN</strong></li>

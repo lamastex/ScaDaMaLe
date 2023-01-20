@@ -7184,8 +7184,6 @@ display(res)
 <p>We can see that the majority of relations are of the type M-M, which is indeed the most general category. While the results are quite noisy, we can find some intuitive examples in the list. For example, relations like &quot;shape&quot; and &quot;mushroom cap shape&quot; are 1-M, showing that most entities are assigned a single unique shape. The M-1 category sadly lacks relations with many source entities. We can still find a few relations that intuitively fit in this category. An example is &quot;academic thesis&quot;, since typically the author of a thesis is only one person but one person can author multiple theses.</p>
 <p>A possible weakness of this approach for classifying the relations is that it is enough that a &quot;?-M&quot; or &quot;M-?&quot; relationship exist for one entity in order to classify the entire relation as such. One way to improve on this could be to set a threshold, requiring the pattern to be found for more than one entity in order to draw the conclusion for the relation in general. Setting such a threshold is however non-trivial and would surely require taking into account the prevalence of each relation among the edges. On the other hand, any formal definition of a 1-M relation requires only one single entity to satisfy it in order for the relation itself to belong to this group. By this reasoning the only correct way to choose a threshold is at one entity. In the end the question boils down to how noisy we believe the data to be.</p>
 </div>
-<div class="cell code" execution_count="1" scrolled="false">
-</div>
 
                     </main>
 

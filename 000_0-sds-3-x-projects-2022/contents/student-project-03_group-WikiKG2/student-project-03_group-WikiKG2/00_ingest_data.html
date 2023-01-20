@@ -203,13 +203,12 @@ import org.apache.commons.io.FileUtils
 </code></pre>
 </div>
 </div>
+<div class="cell markdown">
+<p>Now, copy the dataset from the server where it is stored.</p>
+</div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">// Copy dataset from the server where it is stored
 FileUtils.copyURLToFile(new URL(&quot;http://snap.stanford.edu/ogb/data/linkproppred/wikikg-v2.zip&quot;), new File(&quot;/tmp/wikikg-v2.zip&quot;))
-</code></pre>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-sh">ls /tmp/
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">

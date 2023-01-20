@@ -169,13 +169,27 @@ HorovodRunner is designed to improve model training performance on clusters with
 </div>
 <div class="cell markdown">
 <h3 id="define-a-simple-convolutional-network"><a class="header" href="#define-a-simple-convolutional-network">Define a simple convolutional network</a></h3>
-<p>Here below a vanilla CCN architecture in order to illustrate our problem. First, we will study federated learning for one node. We tried two differents datasets on the same architecture. We only changed the input size and update the NN according to the pictures size.</p>
+<p>Here below a vanilla CCN architecture in order to illustrate our problem. First, we will study federated learning for one node.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">import torch
 import torch.nn as nn
 import torch.nn.functional as F
-      
+import torch.optim as optim
+from torchvision import datasets, transforms
+from time import time
+import os
+import matplotlib.pyplot as plt
+import numpy as np
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">import horovod.torch as hvd
+from sparkdl import HorovodRunner
+</code></pre>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-python">      
 #CIFAR10[100, 3, 32, 32]
 class Net_CIFAR10(nn.Module):
     def __init__(self):
@@ -266,11 +280,7 @@ def create_log_dir():
 <h3 id="run-single-node-training-with-pytorch"><a class="header" href="#run-single-node-training-with-pytorch">Run single node training with PyTorch</a></h3>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">import torch.optim as optim
-from torchvision import datasets, transforms
-from time import time
-import os
-
+<pre><code class="language-python">
 # Creation of the directory to save the parameters
 single_node_log_dir = create_log_dir()
 print(&quot;Log directory:&quot;, single_node_log_dir)
@@ -351,83 +361,11 @@ train(learning_rate=0.001,Elocal=5,model1=Net_CIFAR10())
 <p>Note that in these simulations we are not concentrating on average loss and only scalability is of our interest.</p>
 </div>
 <div class="cell markdown">
-<h2 id="introduction-to-horovod"><a class="header" href="#introduction-to-horovod">Introduction to Horovod</a></h2>
-<p>Horovod is a distributed deep learning training framework for TensorFlow, Keras, PyTorch, and Apache MXNet. Using Horovod allows us to make distributed deep learning fast and easy to use.</p>
-<p>The Horovod goal is to make it easy to take a single-GPU training script and successfully scale it to train across many GPUs in parallel.</p>
-<p>This pakage has two important aspects to take in to account. Firstly, we can make our projract or program to be runed in distrbuted manner by adding a minimum modification into the code. Secondly, this modifications can aid the program to be runed way faster because of using distributed resouces. Below is a chart representing the benchmark( we borrowed from link <a href="href=%22https://horovod.readthedocs.io/en/stable/summary_include.html%22">here</a>) that was done on 128 servers with 4 Pascal GPUs each connected by RoCE-capable 25 Gbit/s network:</p>
-<center><img src="https://user-images.githubusercontent.com/16640218/38965607-bf5c46ca-4332-11e8-895a-b9c137e86013.png" /></center>
-<p>Horovd supports some of the collective operations in both (Message Passing Interface )MPI and (NVIDIA Collective Communications Library)NCCL. Indeed, Horovod core principles are based on MPI concepts such as size, rank, local rank, allreduce, allgather, broadcast, and alltoall. To better understand theses, consider the following example where training script on 4 servers, each having 4 GPUs. If we run one copy of the program per GPU:</p>
-<ul>
-<li>
-<p>Size would be the number of processes, in this case, 16.</p>
-</li>
-<li>
-<p>Rank would be the unique process ID from 0 to 15 (size - 1).</p>
-</li>
-<li>
-<p>Local rank would be the unique process ID within the server from 0 to 3.</p>
-</li>
-</ul>
-<p>Then, we have</p>
-<ul>
-<li><b>Allreduce : </b> aggregates data among multiple processes and distributes results back to them. Allreduce is oftentimes used to average dense tensors.</li>
-</ul>
-<center><img src = "http://mpitutorial.com/tutorials/mpi-reduce-and-allreduce/mpi_allreduce_1.png" /></center>
-<p><code>horovod.torch.allreduce(tensor, average=None, name=None, compression=&lt;class 'horovod.torch.compression.NoneCompressor'&gt;, op=None, prescale_factor=1.0, postscale_factor=1.0, process_set=&lt;horovod.common.process_sets.ProcessSet object&gt;)</code></p>
-<p>A function that performs asynchronous in-place averaging or summation of the input tensor over all the Horovod processes.</p>
-<p>The reduction operation is keyed by the name. If name is not provided, an incremented auto-generated name is used. The tensor type and shape must be the same on all Horovod processes for a given name. The reduction will not start until all processes are ready to send and receive the tensor.</p>
-<ul>
-<li>
-<p><b>Allgather : </b> gathers data from all processes on every process. Allgather is usually used to collect values of sparse tensors.</p>
-<center><img src = "http://mpitutorial.com/tutorials/mpi-scatter-gather-and-allgather/allgather.png" /></center>
-</li>
-</ul>
-<p><code>horovod.torch.allgather(tensor, name=None, process_set=&lt;horovod.common.process_sets.ProcessSet object&gt;)</code></p>
-<p>A function that concatenates the input tensor with the same input tensor on all other Horovod processes. The input tensor is not modified.</p>
-<p>The concatenation is done on the first dimension, so the corresponding input tensors on the different processes must have the same rank and shape, except for the first dimension, which is allowed to be different.</p>
-<ul>
-<li><b> Broadcast: </b> broadcasts data from one process, identified by root rank, onto every other process. <center><img src = "http://mpitutorial.com/tutorials/mpi-broadcast-and-collective-communication/broadcast_pattern.png" /></center></li>
-</ul>
-<p><code>horovod.torch.broadcast(tensor, root_rank, name=None, process_set=&lt;horovod.common.process_sets.ProcessSet object&gt;)</code></p>
-<p>A function that broadcasts the input tensor on root rank to the same input tensor on all other Horovod processes. The input tensor is not modified. The broadcast operation is keyed by the name. If name is not provided, an incremented auto-generated name is used. The tensor type and shape must be the same on all Horovod processes for a given name. The broadcast will not start until all processes are ready to send and receive the tensor.</p>
-<ul>
-<li><b> Reducescatter: </b> aggregates data among multiple processes and scatters the data across them. Reducescatter is used to average dense tensors then split them across processes.</li>
-</ul>
-<center><img src = "https://docs.nvidia.com/deeplearning/sdk/nccl-developer-guide/docs/_images/reducescatter.png" /></center>
-<p><code>horovod.torch.reducescatter(tensor, name=None, compression=&lt;class 'horovod.torch.compression.NoneCompressor'&gt;, op=&lt;MagicMock name='mock().horovod_reduce_op_average()' id='140066922214416'&gt;, process_set=&lt;horovod.common.process_sets.ProcessSet object&gt;)</code></p>
-<p>A function that performs reduction of the input tensor over all the Horovod processes, then scatters the results across all Horovod processes. The input tensor is not modified.</p>
-<ul>
-<li><b> Alltoall </b> is an operation to exchange data between all processes. Alltoall may be useful to implement neural networks with advanced architectures that span multiple devices.</li>
-</ul>
-<p><code>horovod.torch.alltoall(tensor, splits=None, name=None, process_set=&lt;horovod.common.process_sets.ProcessSet object&gt;)</code></p>
-<p>A function that scatters slices of the input tensor to all other Horovod processes and returns a tensor of gathered slices from all other Horovod processes. The input tensor is not modified.</p>
-<p><b> Other collective operators </b></p>
-<p>Unfortuntaley, the other existing collective operations are not implemented in Horovod, e.g., <b> Redcue </b> or <b> Ghather</b> which are defined as follows</p>
-<center><img src = "https://docs.nvidia.com/deeplearning/nccl/user-guide/docs/_images/reduce.png" /></center>
-<p><b> AdaSum </b> The Adaptive Summation, or AdaSum, is an algorithm for improving distributed data parallel training of Deep Learning models. This improvement can be seen in many ways: reducing the number steps to reach the same accuracy and allowing scale to more training workers without penalizing learning rate and convergence stability. AdaSum can be used with Horovod and PyTorch/TensorFlow. To illustrate, suppose there are two almost-parallel gradients from two different GPUs, g1 and g2, and they need to be reduced as shown in the figure below. The two common practices for reductions are g1+g2, the gray vector, or (g1+g2)/2, the green vector. g1+g2 may cause divergence of the model since it is effectively moving in the direction of g1 or g2 by two times the magnitude of g1 or g2. Therefore, generally (g1+g2)/2 is safer and more desired. Note that (g1+g2)/2 penalizes both the components g1 and g2 equally.</p>
-<center> <img src = "https://horovod.readthedocs.io/en/stable/_images/abc4d31f19a315321553564e2225615b.png" /></center>
-<p>Now consider the two orthogonal gradients g1 and g2 in the figure below. Since g1 and g2 are in two different dimensions and independent of each other, g1+g2 may not cause divergence.</p>
-<center> <img src = "https://horovod.readthedocs.io/en/stable/_images/173cffdbdc89620287996ac28ca4a9ae.png" /></center>
-<p>Finally, consider the third scenario where g1 and g2 are neither parallel nor orthogonal as shown in the figure below. In such a case, where taking the sum might cause a divergence, AdaSum controls the effect of the overall gradient update by subtracting half of g1’s projection on g2(pink vector) from g2, subtracting half of g2’s projection on g1 (orange vector) from g1, and summing the two components together.</p>
-<center> <img src = "https://horovod.readthedocs.io/en/stable/_images/d9b318cc2d8c16fe4ade2fa73ad83ec6.png" /></center>
-<p>In a communication system consists nodes having worker GPUs, the communication happens through the CPU because GPUs are not connected by a high speed interconnect like NVLink. In this cases, AdaSum through MPI can be used for both intra-node and inter-node communication.</p>
-<center><img src ="https://horovod.readthedocs.io/en/stable/_images/7220c70747b40ab58fce2dc246958218.png" /></center>
-<p>modification in code is as follows:</p>
-<p><code>optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum)</code> <code>optimizer = hvd.DistributedOptimizer(optimizer, named_parameters=model.named_parameters(), compression=compression, backward_passes_per_step = 5, op=hvd.AdaSum)</code></p>
-</div>
-<div class="cell markdown">
 <h2 id="migrate-to-horovodrunner"><a class="header" href="#migrate-to-horovodrunner">Migrate to HorovodRunner</a></h2>
 <p>HorovodRunner takes a Python method that contains deep learning training code with Horovod hooks. HorovodRunner pickles the method on the driver and distributes it to Spark workers. A <a href="https://horovod.readthedocs.io/en/stable/mpi_include.html">Horovod MPI</a> job is embedded as a Spark job using <a href="https://blog.madhukaraphatak.com/barrier-execution-mode-part-1">barrier execution mode</a>.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">import horovod.torch as hvd
-from sparkdl import HorovodRunner
-</code></pre>
-</div>
-<div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">from time import time
-import os
-hvd_log_dir = create_log_dir()
+<pre><code class="language-python">hvd_log_dir = create_log_dir()
 print(&quot;Log directory:&quot;, hvd_log_dir)
 
 def train_hvd(learning_rate,Elocal,model1):
@@ -488,13 +426,13 @@ def train_hvd(learning_rate,Elocal,model1):
 </div>
 <div class="cell markdown">
 <h2 id="note-on-learning-rate-update"><a class="header" href="#note-on-learning-rate-update">Note on Learning rate update</a></h2>
-<p>Consider a network at iteration \(t\) with weights \(w_t\), and a sequence of \(k\) minibatches \(B_j\) for \(0 ≤ j &lt; k\) each of size \(n\). In <a href="https://arxiv.org/pdf/1706.02677.pdf">this paper</a> they compare the effect of executing \(k\) SGD iterations with small minibatches \(B_j\) and learning rate \(\eta\) versus a single iteration with a large minibatch \(\cup_j B_j\) of size \(kn\) and learning rate \(\hat{\eta}\). For the SGD update</p>
+<p>Consider a network at iteration \(t\) with weights \(w_t\), and a sequence of \(k\) minibatches \(B_j\) for \(0 ≤ j &lt; k\) each of size \(n\). In <a href="https://arxiv.org/pdf/1706.02677.pdf">this paper</a> they compare the effect of executing \(k\) SGD iterations with small minibatches \(B_j\) and learning rate \(\eta\) versus a single iteration with a large minibatch \(\cup_j B_j\) of size \(kn\) and learning rate \(\widehat{\eta}\). For the SGD update</p>
 <p>\[ w_{t+1}=w_t - \eta \frac{1}{n}\sum_{x\in \mathcal{B_j}}\nabla l(x,w_t) \]</p>
 <p>after \(k\) iteration we have</p>
 <p>\[ w_{t+k}=w_t - \eta \frac{1}{n}\sum_{j&lt;k}\sum_{x\in \mathcal{B_j}}\nabla l(x,w_{j+k}) \]</p>
 <p>and for the single step with the large minibatch of sie \(kn\) we have</p>
-<p>\[ \hat{w}<em>{t+1}=w_t - \hat{\eta} \frac{1}{kn}\sum</em>{j&lt;k}\sum_{x\in \mathcal{B_j}}\nabla l(x,w_t) \]</p>
-<p>Now, if we can have \(w_{t+k} \approx \hat{w_{t+1}}\) if we have \(\nabla l(x,w_{j+k})\approx \nabla l(x,w_t)\) and \(\hat{\eta}=k\eta\). Though this assumption is strict, but they show in the paper that it does not affect the final result.</p>
+<p>\[ \widehat{w}<em>{t+1}=w_t - \widehat{\eta} \frac{1}{kn}\sum</em>{j&lt;k}\sum_{x\in \mathcal{B_j}}\nabla l(x,w_t) \]</p>
+<p>Now, if we can have \(w_{t+k} \approx \widehat{w_{t+1}}\) if we have \(\nabla l(x,w_{j+k})\approx \nabla l(x,w_t)\) and \(\widehat{\eta}=k\eta\). Though this assumption is strict, but they show in the paper that it does not affect the final result.</p>
 </div>
 <div class="cell markdown">
 <p>Now that you have defined a training function with Horovod, you can use HorovodRunner to distribute the work of training the model.</p>
@@ -543,6 +481,9 @@ hr.run(train_hvd, learning_rate = 0.001,Elocal=5,model1=Net_CIFAR10())
 </code></pre>
 </div>
 <div class="cell markdown">
+<p>Note that the accuracy heavily depends on the heterogeneity of the data and not the number of clients. Therefore, if the dissipated data does not contain evetry aspect of the whole dataset, the final learning loss will rise.</p>
+</div>
+<div class="cell markdown">
 <h2 id="summary-on-cpu-execution-time"><a class="header" href="#summary-on-cpu-execution-time">Summary on CPU Execution Time</a></h2>
 <p>Execution time of \(i\)'th worker case is \((E_i)\) and therefore the execution time is \(\max(E_i)\). | Number of Workers | Execution Time(s) | | ----------- | ----------- | | 1 | 336.105 | | 2 | 207.549 | | 4 | 115.372 | | 8 | 75.987 |</p>
 <p>Next, GPU processors are considered. Due to unavailability of 4 and 8 worker GPU clusters we skip those cases.</p>
@@ -580,10 +521,7 @@ hr.run(train_hvd, learning_rate = 0.001,Elocal=5,model1=Net_CIFAR10())
 <p>Execution time of \(i\)'th worker is \((E_i)\) and therefore the execution time is \(\max(E_i)\). | Number of Workers | Execution Time(s) | | ----------- | ----------- | | 1 | 52.84 | | 2 | 41.27 | | 4 | NA | | 8 | NA |</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-python">#!pip install matplotlib
-import matplotlib.pyplot as plt
-import numpy as np
-Execution_time=[336.105,207.549,115.372, 75.987]
+<pre><code class="language-python">Execution_time=[336.105,207.549,115.372, 75.987]
 Execution_time2=[52.84,41.27,0,0]
 num_workers=[1,2,4,8]
 plt.figure(figsize=(8, 6), dpi=120)

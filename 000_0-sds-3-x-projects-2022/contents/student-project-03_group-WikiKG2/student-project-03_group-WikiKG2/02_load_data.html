@@ -170,7 +170,8 @@ val df = spark.read.option(&quot;sep&quot;, &quot;,&quot;).csv(&quot;dbfs:///wik
 </div>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">val list = List(&quot;src&quot;, &quot;rel&quot;, &quot;dst&quot;)
+<pre><code class="language-scala">// Rename the columns to src, rel and dst
+val list = List(&quot;src&quot;, &quot;rel&quot;, &quot;dst&quot;)
 val edgesDF = df.toDF(list:_*)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
@@ -180,7 +181,10 @@ edgesDF: org.apache.spark.sql.DataFrame = [src: string, rel: string ... 1 more f
 </div>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-scala">var df1 = spark.sql(&quot;select entid, IF(label = 'Unknown', entid, label) as label, IF(description = 'Unknown', entid, description) as description from `entities_descriptions_1_csv`&quot;)
+<pre><code class="language-scala">// Get the descriptions instead of the entity ids
+// This helps us get a more interpretable view of the data since we can then 
+// see which entities we are actually working with. 
+var df1 = spark.sql(&quot;select entid, IF(label = 'Unknown', entid, label) as label, IF(description = 'Unknown', entid, description) as description from `entities_descriptions_1_csv`&quot;)
 val entdescdf = df1.toDF()
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">

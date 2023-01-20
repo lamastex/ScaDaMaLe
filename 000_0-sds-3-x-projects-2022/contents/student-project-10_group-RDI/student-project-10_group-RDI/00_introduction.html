@@ -161,17 +161,8 @@
 </div>
 <div class="cell markdown">
 <h2 id="background"><a class="header" href="#background">Background</a></h2>
-<p>Saving energy is on everybody's mind:</p>
-<ul>
-<li>Energy crisis in Europe</li>
-<li>Causing industries to cut down on energy consumption</li>
-<li>Network operators are also affected</li>
-</ul>
-<p>So, the question is how can network operators save energy with only minor impacts on end users?</p>
-<ul>
-<li>One idea is to predict the network load</li>
-<li>Based on this, cells can be put to sleep mode if the expected load is low</li>
-</ul>
+<p>Due to the Russian invasion of Ukraine, there is a current global energy crisis all over Europe. Energy prices has gone through the roof causing consumers, as well as industries, to save energy. By saving energy, the energy bill is reduced. For economic reasons industries has been forced to shut down parts of their production line the past months. Another reason for saving energy is to reduce the cost of 1kWh. By lowering the demand, the energy supply will increase. This will force the market to reduce the energy price. To incorporate this, goverments and the EU has put constraints on several industries to surpress the energy consumption. One of these industries are network operators. The constraints might even force them to shut down a few base stations for shorter periods.</p>
+<p>With this in mind, how can network operators save energy with minimal impact on end users? This project has been focusing on one solution, to predict the network load. Based on hte predictions of the network load, a decision algorithm could be implemented that could put cells and base stations into sleep mode if the load is expected to be sufficiently low. Sleep functions already exists in 5G networks but are rarely used and could be exploited much further to optimie energy consumptions.</p>
 </div>
 <div class="cell markdown">
 <img src ='https://raw.githubusercontent.com/lamastex/scalable-data-science/master/images/ScaDaMaLe/2022-WASP/group-10/Load_evolution1.jpg'>
@@ -197,7 +188,8 @@
 <p>An example of the first 10 rows of data can be seen below.</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
-<pre><code class="language-run">&quot;./01_prepare_data&quot;
+<pre><code class="language-python"># To illustrate the dataset, it is loaded from the next notebook, which fuctionalities will be further explained there. 
+%run &quot;./01_prepare_data&quot;
 </code></pre>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
@@ -211,7 +203,7 @@
 </code></pre>
 </div>
 <div class="cell markdown">
-<p>Relative location of the cells:</p>
+<p>Plotting the relative location of the cells:</p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-python">import matplotlib.pyplot as plt
