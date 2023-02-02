@@ -251,6 +251,23 @@
 </ul>
 </div>
 <div class="cell code" execution_count="1" scrolled="auto">
+<pre><code class="language-scala">//This allows easy embedding of publicly available information into any other notebook
+//Example usage:
+// displayHTML(frameIt(&quot;https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation#Topics_in_LDA&quot;,250))
+def frameIt( u:String, h:Int ) : String = {
+      &quot;&quot;&quot;&lt;iframe 
+ src=&quot;&quot;&quot;&quot;+ u+&quot;&quot;&quot;&quot;
+ width=&quot;95%&quot; height=&quot;&quot;&quot;&quot; + h + &quot;&quot;&quot;&quot;
+ sandbox&gt;
+  &lt;p&gt;
+    &lt;a href=&quot;http://spark.apache.org/docs/latest/index.html&quot;&gt;
+      Fallback link for browsers that, unlikely, don't support frames
+    &lt;/a&gt;
+  &lt;/p&gt;
+&lt;/iframe&gt;&quot;&quot;&quot;
+   }
+displayHTML(frameIt(&quot;https://spark.apache.org/docs/latest/rdd-programming-guide.html&quot;,700))
+</code></pre>
 <div class="output execute_result html_result" execution_count="1">
 <iframe 
  src="https://spark.apache.org/docs/latest/rdd-programming-guide.html"

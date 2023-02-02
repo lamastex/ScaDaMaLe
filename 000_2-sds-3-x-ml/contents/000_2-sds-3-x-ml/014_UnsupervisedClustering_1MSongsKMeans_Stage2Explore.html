@@ -155,11 +155,10 @@
 </div>
 <div class="cell markdown">
 <h1 id="stage-2-exploring-songs-data"><a class="header" href="#stage-2-exploring-songs-data">Stage 2: Exploring songs data</a></h1>
-<p><img src="http://training.databricks.com/databricks_guide/end-to-end-02.png" alt="Explore" /></p>
 <p>This is the second notebook in this tutorial. In this notebook we do what any data scientist does with their data right after parsing it: exploring and understanding different aspect of data. Make sure you understand how we get the <code>songsTable</code> by reading and running the ETL notebook. In the ETL notebook we created and cached a temporary table named <code>songsTable</code></p>
 </div>
 <div class="cell markdown">
-<h2 id="lets-do-all-the-main-bits-in-stage-1-now-before-doing-stage-2-in-this-notebook"><a class="header" href="#lets-do-all-the-main-bits-in-stage-1-now-before-doing-stage-2-in-this-notebook">Let's Do all the main bits in Stage 1 now before doing Stage 2 in this Notebook.</a></h2>
+<p><strong>Let's Do all the main bits in Stage 1 now before doing Stage 2 in this Notebook.</strong></p>
 </div>
 <div class="cell code" execution_count="1" scrolled="false">
 <pre><code class="language-scala">// Let's quickly do everything to register the tempView of the table here
@@ -202,7 +201,7 @@ df.createOrReplaceTempView(&quot;songsTable&quot;)
 <div class="output execute_result plain_result" execution_count="1">
 <pre><code>defined class Song
 parseLine: (line: String)Song
-dataRDD: org.apache.spark.rdd.RDD[String] = /databricks-datasets/songs/data-001/part-* MapPartitionsRDD[81] at textFile at command-2971213210276755:30
+dataRDD: org.apache.spark.rdd.RDD[String] = /datasets/sds/songs/data-001/part-* MapPartitionsRDD[236] at textFile at command-2971213210276755:30
 df: org.apache.spark.sql.DataFrame = [artist_id: string, artist_latitude: double ... 18 more fields]
 </code></pre>
 </div>
@@ -214,20 +213,28 @@ df: org.apache.spark.sql.DataFrame = [artist_id: string, artist_latitude: double
 <pre><code>+----------------------------+--------+-----------+---------+-----------+
 |name                        |database|description|tableType|isTemporary|
 +----------------------------+--------+-----------+---------+-----------+
+|all_prices                  |default |null       |MANAGED  |false      |
+|bitcoin_normed_window       |default |null       |MANAGED  |false      |
+|bitcoin_reversals_window    |default |null       |MANAGED  |false      |
 |countrycodes                |default |null       |EXTERNAL |false      |
+|gold_normed_window          |default |null       |MANAGED  |false      |
+|gold_reversals_window       |default |null       |MANAGED  |false      |
 |ltcar_locations_2_csv       |default |null       |MANAGED  |false      |
 |magellan                    |default |null       |MANAGED  |false      |
 |mobile_sample               |default |null       |EXTERNAL |false      |
+|oil_normed_window           |default |null       |MANAGED  |false      |
+|oil_reversals_window        |default |null       |MANAGED  |false      |
+|oil_reversals_window2       |default |null       |MANAGED  |false      |
 |over300all_2_txt            |default |null       |MANAGED  |false      |
 |person                      |default |null       |MANAGED  |false      |
+|personer                    |default |null       |MANAGED  |false      |
 |persons                     |default |null       |MANAGED  |false      |
+|simple_range                |default |null       |MANAGED  |false      |
 |social_media_usage          |default |null       |MANAGED  |false      |
 |social_media_usage_csv_gui  |default |null       |MANAGED  |false      |
 |voronoi20191213uppsla1st_txt|default |null       |MANAGED  |false      |
-|voronoi20191213uppsla2d_txt |default |null       |MANAGED  |false      |
-|voronoi20191213uppsla3d_txt |default |null       |MANAGED  |false      |
-|songstable                  |null    |null       |TEMPORARY|true       |
 +----------------------------+--------+-----------+---------+-----------+
+only showing top 20 rows
 </code></pre>
 </div>
 </div>

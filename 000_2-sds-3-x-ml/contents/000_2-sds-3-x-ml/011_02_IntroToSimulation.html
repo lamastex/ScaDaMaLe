@@ -146,6 +146,9 @@
                 <div id="content" class="content">
                     <main>
                         <div class="cell markdown">
+<p>ScaDaMaLe Course <a href="https://lamastex.github.io/scalable-data-science/sds/3/x/">site</a> and <a href="https://lamastex.github.io/ScaDaMaLe/index.html">book</a></p>
+</div>
+<div class="cell markdown">
 <h1 id="introduction-to-simulation"><a class="header" href="#introduction-to-simulation">Introduction to Simulation</a></h1>
 </div>
 <div class="cell markdown">
@@ -202,7 +205,7 @@ poi: breeze.stats.distributions.Poisson = Poisson(3.0)
 <pre><code class="language-scala">val s = poi.sample(5); // let's draw five samples - black-box
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>s: IndexedSeq[Int] = Vector(2, 4, 3, 4, 6)
+<pre><code>s: IndexedSeq[Int] = Vector(3, 2, 5, 4, 1)
 </code></pre>
 </div>
 </div>
@@ -213,7 +216,7 @@ poi: breeze.stats.distributions.Poisson = Poisson(3.0)
 <pre><code class="language-scala">s.map( x =&gt; poi.probabilityOf(x) ) // PMF
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res0: IndexedSeq[Double] = Vector(0.22404180765538775, 0.16803135574154085, 0.22404180765538775, 0.16803135574154085, 0.05040940672246224)
+<pre><code>res0: IndexedSeq[Double] = Vector(0.22404180765538775, 0.22404180765538775, 0.10081881344492458, 0.16803135574154085, 0.14936120510359185)
 </code></pre>
 </div>
 </div>
@@ -221,7 +224,7 @@ poi: breeze.stats.distributions.Poisson = Poisson(3.0)
 <pre><code class="language-scala">val doublePoi = for(x &lt;- poi) yield x.toDouble // meanAndVariance requires doubles, but Poisson samples over Ints
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>doublePoi: breeze.stats.distributions.Rand[Double] = MappedRand(Poisson(3.0),$Lambda$5909/1062631843@70cdbd4c)
+<pre><code>doublePoi: breeze.stats.distributions.Rand[Double] = MappedRand(Poisson(3.0),$Lambda$8556/443731598@3fbbf491)
 </code></pre>
 </div>
 </div>
@@ -237,7 +240,7 @@ poi: breeze.stats.distributions.Poisson = Poisson(3.0)
 <pre><code class="language-scala">(poi.mean, poi.variance) // population mean and variance
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res2: (Double, Double) = (3.0,3.0)
+<pre><code>res1: (Double, Double) = (3.0,3.0)
 </code></pre>
 </div>
 </div>
@@ -261,7 +264,7 @@ poi: breeze.stats.distributions.Poisson = Poisson(3.0)
 <pre><code class="language-scala">expo.rate // what is the rate parameter
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res3: Double = 0.5
+<pre><code>res2: Double = 0.5
 </code></pre>
 </div>
 </div>
@@ -272,7 +275,7 @@ poi: breeze.stats.distributions.Poisson = Poisson(3.0)
 <pre><code class="language-scala">expo.probability(0, math.log(2) * expo.rate)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res4: Double = 0.5
+<pre><code>res3: Double = 0.1591035847462855
 </code></pre>
 </div>
 </div>
@@ -280,7 +283,7 @@ poi: breeze.stats.distributions.Poisson = Poisson(3.0)
 <pre><code class="language-scala">expo.probability(math.log(2) * expo.rate, 10000.0)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res5: Double = 0.5
+<pre><code>res4: Double = 0.8408964152537145
 </code></pre>
 </div>
 </div>
@@ -288,7 +291,7 @@ poi: breeze.stats.distributions.Poisson = Poisson(3.0)
 <pre><code class="language-scala">expo.probability(0.0, 1.5)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res6: Double = 0.950212931632136
+<pre><code>res5: Double = 0.5276334472589853
 </code></pre>
 </div>
 </div>
@@ -299,7 +302,7 @@ poi: breeze.stats.distributions.Poisson = Poisson(3.0)
 <pre><code class="language-scala">1 - math.exp(-3.0) // the CDF of the Exponential RV with rate parameter 3
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res7: Double = 0.950212931632136
+<pre><code>res6: Double = 0.950212931632136
 </code></pre>
 </div>
 </div>
@@ -312,7 +315,7 @@ poi: breeze.stats.distributions.Poisson = Poisson(3.0)
 <pre><code class="language-scala">val samples = expo.sample(2).sorted; // built-in black box - we will roll our own shortly in Spark
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>samples: IndexedSeq[Double] = Vector(2.412493444974671, 3.6802759985818687)
+<pre><code>samples: IndexedSeq[Double] = Vector(0.5783204633797516, 2.470656843546517)
 </code></pre>
 </div>
 </div>
@@ -320,7 +323,7 @@ poi: breeze.stats.distributions.Poisson = Poisson(3.0)
 <pre><code class="language-scala">expo.probability(samples(0), samples(1));
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res8: Double = 0.007390811722912227
+<pre><code>res7: Double = 0.4581529379432925
 </code></pre>
 </div>
 </div>
@@ -328,7 +331,7 @@ poi: breeze.stats.distributions.Poisson = Poisson(3.0)
 <pre><code class="language-scala">breeze.stats.meanAndVariance(expo.samples.take(10000)); // mean and variance of the sample
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res9: breeze.stats.meanAndVariance.MeanAndVariance = MeanAndVariance(2.0109026469746554,4.073504140726905,10000)
+<pre><code>res8: breeze.stats.meanAndVariance.MeanAndVariance = MeanAndVariance(1.9763018410146713,3.9243880003317417,10000)
 </code></pre>
 </div>
 </div>
@@ -336,7 +339,7 @@ poi: breeze.stats.distributions.Poisson = Poisson(3.0)
 <pre><code class="language-scala">(1 / expo.rate, 1 / (expo.rate * expo.rate)) // mean and variance of the population
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res10: (Double, Double) = (2.0,4.0)
+<pre><code>res9: (Double, Double) = (2.0,4.0)
 </code></pre>
 </div>
 </div>
@@ -7562,6 +7565,41 @@ only showing top 5 rows
 </div>
 </div>
 <div class="cell markdown">
+<p>Using <code>sql.functions</code> and <code>sql.expr</code> for expressions, one can write a much simpler syntax to get Exponetially distributed samples.</p>
+<p>See: - <a href="https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/expressions/index.html">spark/sql/expressions/ docs</a> - <a href="https://sparkbyexamples.com/spark/spark-sql-functions/">https://sparkbyexamples.com/spark/spark-sql-functions/</a></p>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">import org.apache.spark.sql.functions._
+import org.apache.spark.sql.functions.expr
+
+val expoSamplesDFAsSQLExp = spark.range(1000000000).toDF(&quot;Id&quot;) // just make a DF of 100 row indices
+               .select($&quot;Id&quot;, rand(seed=1234567) as &quot;random&quot;) // add a column of random numbers in (0,1)
+               .withColumn(&quot;expo_sample&quot;, expr(&quot;-(1.0 / 0.5) * log(1.0 - random)&quot;))
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>import org.apache.spark.sql.functions._
+import org.apache.spark.sql.functions.expr
+expoSamplesDFAsSQLExp: org.apache.spark.sql.DataFrame = [Id: bigint, random: double ... 1 more field]
+</code></pre>
+</div>
+</div>
+<div class="cell code" execution_count="1" scrolled="false">
+<pre><code class="language-scala">expoSamplesDFAsSQLExp.describe().show()
+</code></pre>
+<div class="output execute_result plain_result" execution_count="1">
+<pre><code>+-------+--------------------+--------------------+--------------------+
+|summary|                  Id|              random|         expo_sample|
++-------+--------------------+--------------------+--------------------+
+|  count|          1000000000|          1000000000|          1000000000|
+|   mean|4.9999999907595944E8| 0.49999521358240573|  1.9999814119383708|
+| stddev|2.8867513473915565E8|  0.2886816216562552|  2.0000011916404206|
+|    min|                   0|1.584746778249268...|3.169493556749679...|
+|    max|           999999999|  0.9999999996809935|  43.731619350261035|
++-------+--------------------+--------------------+--------------------+
+</code></pre>
+</div>
+</div>
+<div class="cell markdown">
 <h2 id="approximating-pi-with-monte-carlo-simulations"><a class="header" href="#approximating-pi-with-monte-carlo-simulations">Approximating Pi with Monte Carlo simulations</a></h2>
 <p>Uisng RDDs directly, let's estimate Pi.</p>
 </div>
@@ -7592,15 +7630,15 @@ val count = inside.count()
 println(&quot;Pi is roughly &quot; + 4.0 * count / n)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>Pi is roughly 3.14156
+<pre><code>Pi is roughly 3.1387
 import scala.math.random
 partitions: Int = 2
 n: Int = 200000
 xs: scala.collection.immutable.Range = Range 1 until 200000
-rdd: org.apache.spark.rdd.RDD[Int] = 'N values rdd' ParallelCollectionRDD[39] at parallelize at command-2971213210276568:10
-sample: org.apache.spark.rdd.RDD[(Double, Double)] = 'Random points rdd' MapPartitionsRDD[40] at map at command-2971213210276568:13
-inside: org.apache.spark.rdd.RDD[(Double, Double)] = 'Random points inside circle' MapPartitionsRDD[41] at filter at command-2971213210276568:20
-count: Long = 157078
+rdd: org.apache.spark.rdd.RDD[Int] = 'N values rdd' ParallelCollectionRDD[192] at parallelize at command-2971213210276568:10
+sample: org.apache.spark.rdd.RDD[(Double, Double)] = 'Random points rdd' MapPartitionsRDD[193] at map at command-2971213210276568:13
+inside: org.apache.spark.rdd.RDD[(Double, Double)] = 'Random points inside circle' MapPartitionsRDD[194] at filter at command-2971213210276568:20
+count: Long = 156935
 </code></pre>
 </div>
 </div>
@@ -7630,10 +7668,6 @@ def f(_):
 count = spark.sparkContext.parallelize(range(1, n + 1), partitions).map(f).reduce(add)
 print(&quot;Pi is roughly %f&quot; % (4.0 * count / n))
 </code></pre>
-<div class="output execute_result plain_result" execution_count="1">
-<pre><code>Pi is roughly 3.138820
-</code></pre>
-</div>
 </div>
 <div class="cell markdown">
 <p>The following is from this <a href="https://cloud.google.com/solutions/monte-carlo-methods-with-hadoop-spark#programming_a_monte_carlo_simulation_in_scala">google turotial</a>.</p>

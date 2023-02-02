@@ -178,8 +178,8 @@ val rdd = sc.parallelize(Array((TestKey(1L, &quot;abd&quot;), &quot;dss&quot;), 
 rdd.groupByKey().collect
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>rdd: org.apache.spark.rdd.RDD[(TestKey, String)] = ParallelCollectionRDD[0] at parallelize at command-2971213210276613:2
-res0: Array[(TestKey, Iterable[String])] = Array((TestKey(1,abd),CompactBuffer(dss)), (TestKey(1,abd),CompactBuffer(qrf)), (TestKey(2,ggs),CompactBuffer(dse)))
+<pre><code>rdd: org.apache.spark.rdd.RDD[(TestKey, String)] = ParallelCollectionRDD[121] at parallelize at command-2971213210276613:2
+res0: Array[(TestKey, Iterable[String])] = Array((TestKey(1,abd),CompactBuffer(dss, qrf)), (TestKey(2,ggs),CompactBuffer(dse)))
 </code></pre>
 </div>
 </div>
@@ -213,7 +213,7 @@ rdd.groupByKey().collect
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
 <pre><code>import com.databricks.example
-rdd: org.apache.spark.rdd.RDD[(com.databricks.example.TestKey, String)] = ParallelCollectionRDD[2] at parallelize at command-2971213210276616:3
+rdd: org.apache.spark.rdd.RDD[(com.databricks.example.TestKey, String)] = ParallelCollectionRDD[123] at parallelize at command-2971213210276616:3
 res2: Array[(com.databricks.example.TestKey, Iterable[String])] = Array((TestKey(1,abd),CompactBuffer(dss, qrf)), (TestKey(2,ggs),CompactBuffer(dse)))
 </code></pre>
 </div>
@@ -254,7 +254,7 @@ Utils.functionThatWillWork(Utils.aNumber)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
 <pre><code>import x.y.z.Utils
-res5: Int = 6
+res9: Int = 6
 </code></pre>
 </div>
 </div>
@@ -308,9 +308,9 @@ myClass.sparkSum(array)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
 <pre><code>import x.y.zpackage._
-array: x.y.zpackage.IntArray = IntArray([I@44a91426)
-myClass: x.y.zpackage.MyClass = x.y.zpackage.MyClass@5d3b142
-res7: Int = 15
+array: x.y.zpackage.IntArray = IntArray([I@5bb7ffc8)
+myClass: x.y.zpackage.MyClass = x.y.zpackage.MyClass@5124c9d2
+res11: Int = 15
 </code></pre>
 </div>
 </div>
@@ -318,13 +318,32 @@ res7: Int = 15
 <pre><code class="language-scala">MyClass.sparkSum(sc, array)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>res8: Int = 15
+<pre><code>res12: Int = 15
 </code></pre>
 </div>
 </div>
 <div class="cell markdown">
 <h1 id="build-packages-locally"><a class="header" href="#build-packages-locally">Build Packages Locally</a></h1>
 <p>Although package cells are quite handy for quick prototyping in notebook environemnts, it is better to develop packages locally on your laptop and then upload the packaged or assembled jar file into databricks to use the classes and methods developed in the package.</p>
+<p>For examples of how to build Scala Spark packages and libraries using <a href="https://maven.apache.org/">mvn</a> or <a href="https://www.scala-sbt.org/">sbt</a> see for example:</p>
+<ul>
+<li>using mvn and Scala:
+<ul>
+<li><a href="https://github.com/lamastex/spark-gdelt">https://github.com/lamastex/spark-gdelt</a></li>
+<li><a href="https://github.com/lamastex/spark-trend-calculus">https://github.com/lamastex/spark-trend-calculus</a></li>
+</ul>
+</li>
+<li>using sbt and Scala:
+<ul>
+<li><a href="https://github.com/lamastex/SparkDensityTree">https://github.com/lamastex/SparkDensityTree</a></li>
+</ul>
+</li>
+<li>using sbt and Scala while allowing interaction with other language libraries plus terraformed infrastructure:
+<ul>
+<li><a href="https://github.com/lamastex/mep">https://github.com/lamastex/mep</a></li>
+</ul>
+</li>
+</ul>
 </div>
 
                     </main>

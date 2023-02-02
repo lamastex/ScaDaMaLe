@@ -209,11 +209,11 @@
 //-----------------------------------------------------------------------------------------------------------------
 val training = spark.read.format(&quot;libsvm&quot;)
                     .option(&quot;numFeatures&quot;, &quot;780&quot;)
-                    .load(&quot;/datasets/sds/mnist-digits/data-001/mnist-digits-train.txt&quot;)
+                    .load(&quot;/databricks-datasets/mnist-digits/data-001/mnist-digits-train.txt&quot;)
 
 val test = spark.read.format(&quot;libsvm&quot;)
                     .option(&quot;numFeatures&quot;, &quot;780&quot;)
-                    .load(&quot;/datasets/sds/mnist-digits/data-001/mnist-digits-test.txt&quot;)
+                    .load(&quot;/databricks-datasets/mnist-digits/data-001/mnist-digits-test.txt&quot;)
 // Cache data for multiple uses.
 training.cache()
 test.cache()
@@ -320,9 +320,9 @@ val dtc = new DecisionTreeClassifier().setLabelCol(&quot;indexedLabel&quot;)
 val pipeline = new Pipeline().setStages(Array(indexer, dtc))
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>indexer: org.apache.spark.ml.feature.StringIndexer = strIdx_cdb9fb742f94
-dtc: org.apache.spark.ml.classification.DecisionTreeClassifier = dtc_9345fcaec0f5
-pipeline: org.apache.spark.ml.Pipeline = pipeline_a426bd538000
+<pre><code>indexer: org.apache.spark.ml.feature.StringIndexer = strIdx_7ad9a3cadad8
+dtc: org.apache.spark.ml.classification.DecisionTreeClassifier = dtc_be3336ba3ef4
+pipeline: org.apache.spark.ml.Pipeline = pipeline_518a89c2841c
 </code></pre>
 </div>
 </div>
@@ -333,7 +333,7 @@ pipeline: org.apache.spark.ml.Pipeline = pipeline_a426bd538000
 <pre><code class="language-scala">val model = pipeline.fit(training)
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>model: org.apache.spark.ml.PipelineModel = pipeline_a426bd538000
+<pre><code>model: org.apache.spark.ml.PipelineModel = pipeline_518a89c2841c
 </code></pre>
 </div>
 </div>
@@ -583,7 +583,7 @@ display(tree)
 }
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
-<pre><code>variedMaxDepthModels: scala.collection.immutable.IndexedSeq[org.apache.spark.ml.PipelineModel] = Vector(pipeline_e96074b3bded, pipeline_12646faf8260, pipeline_d5f639d6a180, pipeline_4034c9138161, pipeline_83215a1ed684, pipeline_8737125f5dcc, pipeline_02a6caa4d542, pipeline_88827be266ae)
+<pre><code>variedMaxDepthModels: scala.collection.immutable.IndexedSeq[org.apache.spark.ml.PipelineModel] = Vector(pipeline_665dda68220e, pipeline_b414c08244ef, pipeline_44a8ad1622ad, pipeline_c5a942b290e4, pipeline_032a64305933, pipeline_92a56b5767ee, pipeline_ab0cc9448943, pipeline_adc5aa7af814)
 </code></pre>
 </div>
 </div>
@@ -614,7 +614,7 @@ val evaluator = new MulticlassClassificationEvaluator().setLabelCol(&quot;indexe
 </code></pre>
 <div class="output execute_result plain_result" execution_count="1">
 <pre><code>import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
-evaluator: org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator = MulticlassClassificationEvaluator: uid=mcEval_0ee0afcb7621, metricName=f1, metricLabel=0.0, beta=1.0, eps=1.0E-15
+evaluator: org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator = MulticlassClassificationEvaluator: uid=mcEval_eac7c153e73e, metricName=f1, metricLabel=0.0, beta=1.0, eps=1.0E-15
 </code></pre>
 </div>
 </div>
