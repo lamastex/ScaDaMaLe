@@ -1,0 +1,215 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>sds-3.x/ScaDaMaLe</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="scroll-mdbook-outputs.css">
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Student Group Projects</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">sds-3.x/ScaDaMaLe</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="group-projects-scadamale-wasp-instance-2024-2025"><a class="header" href="#group-projects-scadamale-wasp-instance-2024-2025">Group Projects: ScaDaMaLe WASP Instance 2024-2025</a></h1>
+<p>Edited by Raazesh Sainudiin.</p>
+<p>Peer-reviewed by project authors according to <a href="https://github.com/lamastex/scalable-data-science/blob/master/dbcArchives/2024/PEER_REVIEW_INSTRUCTIONS.md">these instructions</a> 
+and made available <a href="https://github.com/lamastex/scalable-data-science/tree/master/dbcArchives/2024/PeerReviews">here</a>.</p>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p>A total of 32 PhD students in 9 groups did projects of their choosing in Scalable Data Science and Distributed Machine Learning, a mandatory as well as elective course of The WASP Graduate School in 2024-2025. See <a href="https://lamastex.github.io/ScaDaMaLe/">ScaDaMaLe Course Pathways</a> for details.</p>
+<p><strong>The Best Student Group Project</strong> on the basis of peer-review was GroupProject01 on <em>Federated Named Entity Recognition: NERF</em> by Jennifer Andersson, Lovisa Hagstrom, Katriin Kukk and Thibault Marette.</p>
+<h2 id="student-group-projects"><a class="header" href="#student-group-projects">Student Group Projects</a></h2>
+<ol>
+<li><a href="https://github.com/tmaretteKTH/nerf_wasp">Federated Named Entity Recognition: NERF</a> by Jennifer Andersson, Lovisa Hagstrom, Katriin Kukk, Thibault Marette. <a href="https://youtu.be/eVNabHd_f8Y?si=fzg5t5yfLknmAOCM">Presentation Video</a>.</li>
+<li><a href="https://github.com/Carriewenyangyang/scalable-data-science-project-group">Federated Learning for Music Recommendation System</a> by Lukas Eveborn, Christian Gustavsson, Olle Hansson and Yangyang Wen. <a href="https://youtu.be/2dvheLvMmuc?si=RijGGSGUqYKzRr10">Presentation Video</a>.</li>
+<li><a href="https://github.com/thanadol-git/ray-sam">ray-sam: Segment Anything Model uisng Ray.io</a> by Songtao Cheng, Jingyu Guo, Nils Mechtel and Thanadol Sutantiwanichkul. <a href="https://youtu.be/joSFPWtRubQ?si=OC5KQsISgRLPo4mB">Presentation Video</a>.</li>
+<li><a href="https://github.com/sarakarimi/PlantMap">Plant Map: Federated learning for segmentation, detection, and classification of weed species in aerial images taken from farm fields</a> by Derya Akbaba, Sofia Andersson, Xavante Erickson, Markus Fritzche and Sara Karimi. <a href="https://youtu.be/R_OgPJmEriQ?si=E9Y1ThyghbUxnRp0">Presentation Video</a>.</li>
+<li><a href="https://github.com/lukasborggren/gcp-llm-cpt">GCP-llm-CPT: Continued Pre-Training of Large Language Models on Google Cloud Platform</a> by Borggren Lukas. <a href="https://youtu.be/PNGWT-X7jWs?si=P21qS-lSrBxfVVRA">Presentation Video</a>.</li>
+<li><a href="https://github.com/WangZesen/scalable-data-project">Descent RSC: Decentralized Training for Road Surfaces Classification</a> by Palatip Jopanya, Sheng Liu and Zesen Wang. <a href="https://youtu.be/2eJdGWZvwzs?si=rNLg1cGi8WCgMQGs">Presentation Video</a>.</li>
+<li><a href="https://github.com/antmats/matrees">Matrees: Scalable missingness-avoiding decision trees</a> by Anton Matsson and Newton Mwai. <a href="https://youtu.be/R56ajqVFn74?si=dYpD11uosAT5tnYu">Presentation Video</a>.</li>
+<li><a href="https://github.com/jzh18/NeedleDDD">NeedleDDD: A Distributed and Decentralized Machine Learning Framework</a> by Eric Olsson, Qi Shao, Hantang Zhang and Huaifeng Zhang. <a href="https://youtu.be/9GM_yTKiXuY?si=twn-VjzMwuMgFBG7">Presentation Video</a>.</li>
+<li><a href="https://github.com/PengKuang/team_scalable_timeseries">Time series anomaly detection using an ensemble of Autoencoders</a> by Kasper Bagmark, Erik Jansson, Peng Kuang, Michele Di Sabato and Selma Tabakovic. <a href="https://youtu.be/td-i9vXtVUg?si=hynJijwsG5nagVsE">Presentation Video</a>.</li>
+</ol>
+<h2 id="acknowledgements"><a class="header" href="#acknowledgements">Acknowledgements</a></h2>
+<p>These project were partially supported by the Wallenberg AI, Autonomous Systems and Software Program funded by Knut and Alice Wallenberg Foundation to fufill the requirements to pass the WASP Graduate School Course Scalable Data Science and Distributed Machine Learning - <a href="https://lamastex.github.io/ScaDaMaLe">ScaDaMaLe-WASP-UU-2024</a>. Computing infrastructure for learning was supported by Databricks Inc.'s Community Edition. The course was Industrially sponsored by Jim Dowling of Logical Clocks AB, Stockholm, Sweden, Reza Zadeh of Matroid Inc., Palo Alto, California, USA, and Andreas Hellander &amp; Salman Toor of Scaleout Systems AB, Uppsala, Sweden. </p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            MathJax.Hub.Register.StartupHook('End', function() {
+                window.setTimeout(window.print, 100);
+            });
+        });
+        </script>
+
+    </body>
+</html>
